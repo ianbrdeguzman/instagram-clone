@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Form from '../components/Form';
-import GetApp from '../components/GetApp';
-import Slider from '../components/Slider';
+import Form from '../../../components/Form';
+import GetApp from '../../../components/GetApp';
+import Slider from '../../../components/Slider';
 
-const Home = () => {
+const Login = () => {
     return (
         <div className='min-h-screen bg-gray-100 flex justify-center items-center'>
             <Slider />
@@ -39,4 +39,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Login;

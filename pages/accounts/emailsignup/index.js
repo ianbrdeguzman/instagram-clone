@@ -24,7 +24,7 @@ const Register = () => {
                 <div className='w-screen sm:max-w-[350px] my-12 sm:my-2 flex justify-center text-center sm:border'>
                     <p className='w-full text-sm p-0 sm:py-4 sm:bg-white'>
                         Have an account?{' '}
-                        <Link href='/'>
+                        <Link href='/accounts/login'>
                             <span className='text-blue-500 font-semibold cursor-pointer'>
                                 Log In
                             </span>

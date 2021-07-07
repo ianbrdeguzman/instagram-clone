@@ -3,23 +3,29 @@ import User from '../../../models/userModel';
 import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
-    try {
-        await dbConnect();
+    if (req.method === 'POST') {
+        try {
+            await dbConnect();
 
-        const user = new User({
-            email: req.body.emailRegister,
-            name: req.body.name,
-            username: req.body.username,
-            password: await bcrypt.hash(req.body.passwordRegister, 6),
-        });
+            const user = new User({
+                email: req.body.emailRegister,
+                name: req.body.name,
+                username: req.body.username,
+                password: await bcrypt.hash(req.body.passwordRegister, 6),
+            });
 
-        const createdUser = await user.save();
+            const createdUser = await user.save();
 
-        res.status(200).send(createdUser);
-    } catch (error) {
-        console.log(error);
+            res.status(200).send(createdUser);
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({
+                message: error,
+            });
+        }
+    } else {
         res.status(500).send({
-            message: error,
+            message: 'This is not a POST request.',
         });
     }
 }

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.10",
     "mongoose": "^5.13.2",
     "next": "11.0.1",

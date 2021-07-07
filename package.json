@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "mongodb": "^3.6.10",
     "next": "11.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-icons": "^4.2.0",
-    "react-spring": "^9.2.3"
+    "react-hook-form": "^7.10.1",
+    "react-icons": "^4.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",

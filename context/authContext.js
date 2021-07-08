@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
 export const AuthContext = createContext();
@@ -6,8 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [errorLogin, setErrorLogin] = useState(null);
-    const [errorRegister, setErrorRegister] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const loadUserFromCookies = async () => {
@@ -32,22 +31,7 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
         } catch (error) {
             setLoading(false);
-            setErrorLogin(
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-            );
-        }
-    };
-
-    const register = async (data) => {
-        try {
-            setLoading(true);
-            const res = await axios.post('/api/register', data);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            setErrorLogin(
+            setError(
                 error.response && error.response.data.message
                     ? error.response.data.message
                     : error.message
@@ -66,7 +50,7 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
         } catch (error) {
             setLoading(false);
-            setErrorRegister(
+            setError(
                 error.response && error.response.data.message
                     ? error.response.data.message
                     : error.message
@@ -81,10 +65,7 @@ export const AuthProvider = ({ children }) => {
                 loading,
                 login,
                 logout,
-                register,
-                errorLogin,
-                errorRegister,
-                errorRegister,
+                error,
             }}
         >
             {children}

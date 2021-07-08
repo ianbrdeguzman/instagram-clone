@@ -7,7 +7,7 @@ import useAuth from '../hooks/useAuth';
 const LoginForm = () => {
     const { register, handleSubmit, watch } = useForm();
 
-    const { login, errorLogin, loading } = useAuth();
+    const { login, error, loading } = useAuth();
 
     const { push } = useRouter();
 
@@ -80,7 +80,7 @@ const LoginForm = () => {
                 </span>
                 <span>Log in with Facebook</span>
             </button>
-            {errorLogin && <Error>{errorLogin}</Error>}
+            {error && <Error>{error}</Error>}
             <button className='text-xs mb-8'>Forgot password?</button>
         </main>
     );

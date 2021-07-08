@@ -2,7 +2,7 @@ import Error from '../components/Error';
 import { useForm } from 'react-hook-form';
 import { AiFillFacebook, AiOutlineCloseCircle } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import useAuth from '../hooks/useAuth';
+import useRegister from '../hooks/useRegister';
 
 const RegisterForm = () => {
     const {
@@ -12,7 +12,7 @@ const RegisterForm = () => {
         formState: { errors },
     } = useForm();
 
-    const { register: registerUser, errorRegister, loading } = useAuth();
+    const { register: registerUser, loading, error } = useRegister();
 
     const { push } = useRouter();
 
@@ -142,7 +142,7 @@ const RegisterForm = () => {
                     </button>
                 )}
             </form>
-            {errorRegister && <Error>{errorRegister}</Error>}
+            {error && <Error>{error}</Error>}
             <div className='w-3/4 text-gray-500 text-center text-xs mb-8'>
                 <p>
                     By signing up, you agree to our{' '}

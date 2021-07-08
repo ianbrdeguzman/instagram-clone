@@ -1,8 +1,28 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import Form from '../../../components/Form';
 import GetApp from '../../../components/GetApp';
 import Slider from '../../../components/Slider';
+import cookie from 'cookie';
+import LoginForm from '../../../components/LoginForm';
+
+export const getServerSideProps = ({ req, res }) => {
+    if (req.headers.cookie) {
+        const { token } = cookie.parse(req.headers.cookie);
+
+        if (token) {
+            return {
+                redirect: {
+                    destination: '/',
+                    permanent: false,
+                },
+            };
+        }
+    } else {
+        return {
+            props: {},
+        };
+    }
+};
 
 const Login = () => {
     return (
@@ -21,7 +41,7 @@ const Login = () => {
                             />
                         </h1>
                     </Link>
-                    <Form login />
+                    <LoginForm />
                 </div>
                 <div className='w-screen sm:max-w-[350px] my-12 sm:my-2 flex justify-center text-center sm:border'>
                     <p className='w-full text-sm p-0 sm:py-4 sm:bg-white'>

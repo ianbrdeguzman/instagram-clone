@@ -31,7 +31,7 @@ const Login = () => {
             <div className='flex flex-col items-center justify-center'>
                 <div className='w-screen sm:max-w-[350px] sm:border sm:bg-white'>
                     <Link href='/'>
-                        <h1 className='flex justify-center py-6'>
+                        <a className='flex justify-center py-6'>
                             <Image
                                 src='/images/logo.png'
                                 alt='Logo'
@@ -39,7 +39,7 @@ const Login = () => {
                                 height='60'
                                 priority
                             />
-                        </h1>
+                        </a>
                     </Link>
                     <LoginForm />
                 </div>
@@ -47,9 +47,9 @@ const Login = () => {
                     <p className='w-full text-sm p-0 sm:py-4 sm:bg-white'>
                         Dont have an account?{' '}
                         <Link href='/accounts/emailsignup'>
-                            <span className='text-blue-500 font-semibold cursor-pointer'>
-                                Sign up
-                            </span>
+                            <a className='text-blue-500 font-semibold cursor-pointer'>
+                                Sign Up
+                            </a>
                         </Link>
                     </p>
                 </div>

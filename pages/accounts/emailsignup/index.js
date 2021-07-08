@@ -29,7 +29,7 @@ const Register = () => {
             <div className='flex flex-col items-center justify-center'>
                 <div className='w-screen sm:max-w-[350px] sm:border sm:bg-white'>
                     <Link href='/'>
-                        <h1 className='flex justify-center py-6'>
+                        <a className='flex justify-center py-6'>
                             <Image
                                 src='/images/logo.png'
                                 alt='Logo'
@@ -37,7 +37,7 @@ const Register = () => {
                                 height='60'
                                 priority
                             />
-                        </h1>
+                        </a>
                     </Link>
                     <RegisterForm />
                 </div>
@@ -45,9 +45,9 @@ const Register = () => {
                     <p className='w-full text-sm p-0 sm:py-4 sm:bg-white'>
                         Have an account?{' '}
                         <Link href='/accounts/login'>
-                            <span className='text-blue-500 font-semibold cursor-pointer'>
+                            <a className='text-blue-500 font-semibold cursor-pointer'>
                                 Log In
-                            </span>
+                            </a>
                         </Link>
                     </p>
                 </div>

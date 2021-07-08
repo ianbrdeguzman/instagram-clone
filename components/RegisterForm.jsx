@@ -1,8 +1,8 @@
 import Error from '../components/Error';
 import { useForm } from 'react-hook-form';
 import { AiFillFacebook, AiOutlineCloseCircle } from 'react-icons/ai';
-import { useAuth } from '../context/authContext';
 import { useRouter } from 'next/router';
+import useAuth from '../hooks/useAuth';
 
 const RegisterForm = () => {
     const {

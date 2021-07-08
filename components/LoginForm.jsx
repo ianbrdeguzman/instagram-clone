@@ -1,8 +1,8 @@
 import Error from '../components/Error';
 import { useForm } from 'react-hook-form';
 import { AiFillFacebook } from 'react-icons/ai';
-import { useAuth } from '../context/authContext';
 import { useRouter } from 'next/router';
+import useAuth from '../hooks/useAuth';
 
 const LoginForm = () => {
     const { register, handleSubmit, watch } = useForm();

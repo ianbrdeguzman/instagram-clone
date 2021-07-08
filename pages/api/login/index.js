@@ -2,6 +2,7 @@ import dbConnect from '../../../utils/dbConnect';
 import User from '../../../models/userModel';
 import bcrypt from 'bcryptjs';
 import generateToken from '../../../utils/generateToken';
+import cookie from 'cookie';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -12,11 +13,23 @@ export default async function handler(req, res) {
 
             if (user) {
                 if (await bcrypt.compare(req.body.password, user.password)) {
+                    const token = generateToken(user);
+
+                    res.setHeader(
+                        'Set-Cookie',
+                        cookie.serialize('token', token, {
+                            httpOnly: true,
+                            secure: process.env.NODE_ENV !== 'development',
+                            maxAge: 60 * 60,
+                            sameSite: 'strict',
+                            path: '/',
+                        })
+                    );
                     res.status(200).send({
+                        _id: user._id,
                         email: user.email,
                         name: user.name,
                         username: user.username,
-                        token: generateToken(user),
                     });
                 } else {
                     res.status(404).send({

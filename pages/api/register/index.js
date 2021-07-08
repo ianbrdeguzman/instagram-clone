@@ -16,12 +16,14 @@ export default async function handler(req, res) {
 
             const createdUser = await user.save();
 
-            res.status(200).send(createdUser);
+            if (createdUser) {
+                res.status(200).send({
+                    message: 'Registration successful.',
+                });
+            }
         } catch (error) {
             console.log(error);
-            res.status(500).send({
-                message: error,
-            });
+            res.status(500).send(error);
         }
     } else {
         res.status(500).send({

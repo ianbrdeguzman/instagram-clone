@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         res.setHeader(
             'Set-Cookie',
-            cookie.serialize('token', '', {
+            cookie.serialize('refreshToken', '', {
                 httpOnly: true,
                 secure: process.env.NODE_ENV !== 'development',
                 expires: new Date(0),

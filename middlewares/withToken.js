@@ -31,7 +31,19 @@ const withToken = (handler) => {
                             process.env.JWT_REFRESH_TOKEN,
                             (error, decoded) => {
                                 if (error) {
-                                    throw new Error('You need to sign in.');
+                                    // if refresh token is expired
+                                    res.setHeader(
+                                        'Set-Cookie',
+                                        cookie.serialize('refreshToken', '', {
+                                            httpOnly: true,
+                                            secure:
+                                                process.env.NODE_ENV !==
+                                                'development',
+                                            expires: new Date(0),
+                                            sameSite: 'strict',
+                                            path: '/',
+                                        })
+                                    );
                                 } else {
                                     accessTokenUser = decoded;
                                 }

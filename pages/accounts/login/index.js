@@ -7,9 +7,9 @@ import LoginForm from '../../../components/LoginForm';
 
 export const getServerSideProps = ({ req, res }) => {
     if (req.headers.cookie) {
-        const { token } = cookie.parse(req.headers.cookie);
+        const { refreshToken } = cookie.parse(req.headers.cookie);
 
-        if (token) {
+        if (refreshToken) {
             return {
                 redirect: {
                     destination: '/',

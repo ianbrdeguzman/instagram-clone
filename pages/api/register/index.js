@@ -16,11 +16,11 @@ export default async function handler(req, res) {
 
             const createdUser = await user.save();
 
-            if (createdUser) {
-                res.status(200).send({
-                    message: 'Registration successful.',
-                });
-            }
+            if (!createdUser) throw new Error('Oops. Something went wrong.');
+
+            res.status(200).send({
+                message: 'Registration successful.',
+            });
         } catch (error) {
             console.log(error);
             res.status(500).send(error);

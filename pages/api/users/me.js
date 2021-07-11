@@ -1,14 +1,10 @@
-import cookie from 'cookie';
-import jwt from 'jsonwebtoken';
+import withToken from '../../../middlewares/withToken';
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
     if (req.method === 'GET') {
         try {
-            const { token } = cookie.parse(req.headers.cookie);
-
-            const user = jwt.verify(token, process.env.JWT_SECRET);
-
-            res.status(200).send(user);
+            const currentUser = req.user;
+            res.status(200).send(currentUser);
         } catch (error) {
             res.status(401).send({
                 message: 'Unauthorized.',
@@ -19,4 +15,6 @@ export default async function handler(req, res) {
             message: 'This is not a GET request.',
         });
     }
-}
+};
+
+export default withToken(handler);

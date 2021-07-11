@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const generateToken = (user) => {
+export const generateToken = (user) => {
     return jwt.sign(
         {
             _id: user._id,
@@ -8,11 +8,24 @@ const generateToken = (user) => {
             name: user.name,
             username: user.username,
         },
-        process.env.JWT_SECRET,
+        process.env.JWT_ACCESS_TOKEN,
+        {
+            expiresIn: '1s',
+        }
+    );
+};
+
+export const generateRefreshToken = (user) => {
+    return jwt.sign(
+        {
+            _id: user._id,
+            email: user.email,
+            name: user.name,
+            username: user.username,
+        },
+        process.env.JWT_REFRESH_TOKEN,
         {
             expiresIn: '1d',
         }
     );
 };
-
-export default generateToken;

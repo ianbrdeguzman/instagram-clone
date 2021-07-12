@@ -18,7 +18,9 @@ const RegisterForm = () => {
 
     const onRegister = async (data) => {
         await registerUser(data);
-        push('/accounts/login');
+        if (error === null) {
+            push('/accounts/login');
+        }
     };
 
     return (

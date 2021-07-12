@@ -9,6 +9,7 @@ export const RegisterProvider = ({ children }) => {
 
     const register = async (data) => {
         try {
+            setError(null);
             setLoading(true);
             await axios.post('/api/register', data);
             setLoading(false);

@@ -7,14 +7,25 @@ export default async function handler(req, res) {
         try {
             await dbConnect();
 
-            const user = new User({
-                email: req.body.emailRegister,
-                name: req.body.name,
-                username: req.body.username,
-                password: await bcrypt.hash(req.body.passwordRegister, 6),
+            const { emailRegister, name, username, passwordRegister } =
+                req.body;
+
+            const userEmail = await User.findOne({ email: emailRegister });
+
+            if (userEmail) throw new Error('Email address is already taken.');
+
+            const userHandle = await User.findOne({ username });
+
+            if (userHandle) throw new Error('Username is already taken.');
+
+            const newUser = new User({
+                email: emailRegister,
+                name,
+                username,
+                password: await bcrypt.hash(passwordRegister, 6),
             });
 
-            const createdUser = await user.save();
+            const createdUser = await newUser.save();
 
             if (!createdUser) throw new Error('Oops. Something went wrong.');
 
@@ -22,8 +33,9 @@ export default async function handler(req, res) {
                 message: 'Registration successful.',
             });
         } catch (error) {
-            console.log(error);
-            res.status(500).send(error);
+            res.status(500).send({
+                message: error.message,
+            });
         }
     } else {
         res.status(500).send({

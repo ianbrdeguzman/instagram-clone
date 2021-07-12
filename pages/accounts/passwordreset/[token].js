@@ -1,11 +1,28 @@
-import { useRouter } from 'next/router';
 import PasswordResetForm from '../../../components/PasswordResetForm';
 import Link from 'next/link';
 import Image from 'next/image';
+import cookie from 'cookie';
+
+export const getServerSideProps = ({ req, res }) => {
+    if (req.headers.cookie) {
+        const { refreshToken } = cookie.parse(req.headers.cookie);
+
+        if (refreshToken) {
+            return {
+                redirect: {
+                    destination: '/',
+                    permanent: false,
+                },
+            };
+        }
+    } else {
+        return {
+            props: {},
+        };
+    }
+};
 
 const ForgotPassword = () => {
-    const { query } = useRouter();
-    console.log(query.token);
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
             <div className='w-screen sm:max-w-[350px] sm:border sm:bg-white'>

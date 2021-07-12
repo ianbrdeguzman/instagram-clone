@@ -1,7 +1,7 @@
 import Error from '../components/Error';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import useAuth from '../hooks/useAuth';
+import useReset from '../hooks/useReset';
 
 const PasswordResetForm = () => {
     const {
@@ -11,21 +11,27 @@ const PasswordResetForm = () => {
         formState: { errors },
     } = useForm();
 
-    const { login, error, loading } = useAuth();
+    const { resetPassword, error, loading, data: response } = useReset();
 
     const { push, query } = useRouter();
 
-    const resetPassword = (data) => {
-        console.log(query.token);
-        console.log(data);
+    const onSubmit = async (data) => {
+        resetPassword(query.token, data.password);
+        if (response?.status === 200) {
+            push('/accounts/login');
+        }
     };
 
     return (
         <main className='flex flex-col justify-center items-center'>
-            <form
-                className='w-3/4 text-xs'
-                onSubmit={handleSubmit(resetPassword)}
-            >
+            <form className='w-3/4 text-xs' onSubmit={handleSubmit(onSubmit)}>
+                {response && response.data && (
+                    <>
+                        <p className='mb-2 text-green-500 text-center'>
+                            {response.data.message}
+                        </p>
+                    </>
+                )}
                 <label>
                     <input
                         type='password'
@@ -62,7 +68,9 @@ const PasswordResetForm = () => {
                     />
                 </label>
                 {errors && errors.confirmPassword && (
-                    <p>{errors.confirmPassword}</p>
+                    <p className='mt-2 text-red-500'>
+                        {errors.confirmPassword.message}
+                    </p>
                 )}
                 {watch('password')?.length >= 6 &&
                 watch('confirmPassword')?.length >= 6 ? (

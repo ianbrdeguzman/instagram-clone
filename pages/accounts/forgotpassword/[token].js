@@ -22,7 +22,7 @@ export const getServerSideProps = ({ req, res }) => {
     }
 };
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
             <div className='w-screen sm:max-w-[350px] sm:border sm:bg-white'>
@@ -43,4 +43,4 @@ const ForgotPassword = () => {
     );
 };
 
-export default ForgotPassword;
+export default ResetPassword;

@@ -28,11 +28,39 @@ export const PasswordResetProvider = ({ children }) => {
         }
     };
 
+    const forgotPassword = async (email) => {
+        try {
+            setError(null);
+            setLoading(true);
+            const response = await axios.post('/api/forgot-password', {
+                email,
+            });
+            if (response?.data.accepted.length > 0) {
+                setData(
+                    'Password reset link has been sent. Please check your email.'
+                );
+                setLoading(false);
+            } else {
+                throw new Error({
+                    message: 'Oops! Something went wrong.',
+                });
+            }
+        } catch (error) {
+            setError(
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message
+            );
+            setLoading(false);
+        }
+    };
+
     return (
         <PasswordResetContext.Provider
             value={{
                 loading,
                 resetPassword,
+                forgotPassword,
                 data,
                 error,
             }}

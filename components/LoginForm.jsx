@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { AiFillFacebook } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import useAuth from '../hooks/useAuth';
+import Link from 'next/link';
 
 const LoginForm = () => {
     const { register, handleSubmit, watch } = useForm();
@@ -81,7 +82,9 @@ const LoginForm = () => {
                 <span>Log in with Facebook</span>
             </button>
             {error && <Error>{error}</Error>}
-            <button className='text-xs mb-8'>Forgot password?</button>
+            <Link href='/accounts/forgotpassword'>
+                <a className='text-xs mb-8'>Forgot password?</a>
+            </Link>
         </main>
     );
 };

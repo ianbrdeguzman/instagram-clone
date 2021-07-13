@@ -23,7 +23,7 @@ export const getServerSideProps = ({ req, res }) => {
     }
 };
 
-const Register = () => {
+const EmailSignUp = () => {
     return (
         <div className='min-h-screen bg-gray-100 flex justify-center items-center'>
             <div className='flex flex-col items-center justify-center'>
@@ -57,4 +57,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default EmailSignUp;

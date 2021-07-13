@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
             const token = generatePasswordResetToken(user);
 
-            const url = `http://localhost:3000/accounts/passwordreset/${token}`;
+            const url = `http://localhost:3000/accounts/forgotpassword/${token}`;
 
             const info = await sendForgotPasswordMail(user, url);
 

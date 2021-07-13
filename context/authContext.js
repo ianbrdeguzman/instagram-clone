@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
             } catch (error) {
                 setLoading(false);
                 localStorage.removeItem('token');
-                push('/accounts/login');
+                // push('/accounts/login');
                 return;
             }
         };
@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (data) => {
         try {
+            setError(null);
             setLoading(true);
             const res = await axios.post('/api/login', data);
             setUser(res.data);

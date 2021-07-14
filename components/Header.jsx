@@ -76,7 +76,7 @@ const Header = () => {
                 </Link>
                 <button
                     onClick={() => setShow(!show)}
-                    className='flex text-sm m border rounded-full p-1 bg-gray-100'
+                    className='flex justify-center items-center text-sm m border rounded-full bg-gray-100 w-[28px] h-[28px]'
                 >
                     <span className='uppercase'>
                         {user?.username.substring(0, 2)}
@@ -84,12 +84,19 @@ const Header = () => {
                 </button>
                 {show && (
                     <ul className='w-[230px] bg-white absolute top-[50px] right-0 text-sm rounded shadow'>
-                        <li className='py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center'>
-                            <span className='mr-2 text-base'>
-                                <CgProfile />
-                            </span>
-                            Profile
-                        </li>
+                        <Link
+                            onClick={() => setShow(!show)}
+                            href={`/${user?.username}`}
+                        >
+                            <a>
+                                <li className='py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center'>
+                                    <span className='mr-2 text-base'>
+                                        <CgProfile />
+                                    </span>
+                                    Profile
+                                </li>
+                            </a>
+                        </Link>
                         <li className='py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center'>
                             <span className='mr-2 text-base'>
                                 <BiBookmark />

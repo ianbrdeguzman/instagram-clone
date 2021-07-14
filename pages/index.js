@@ -1,6 +1,6 @@
 import cookie from 'cookie';
 import { useRouter } from 'next/router';
-import Header from '../components/Header';
+import Layout from '../components/Layout';
 import useAuth from '../hooks/useAuth';
 
 export const getServerSideProps = ({ req, res }) => {
@@ -32,11 +32,12 @@ const Home = () => {
     };
 
     return (
-        <div className='min-h-screen bg-gray-100 flex flex-col justify-center items-center'>
-            <Header />
-            <h1>Welcome {user?.name}</h1>
-            <button onClick={onSignOut}>Logout</button>
-        </div>
+        <Layout>
+            <div className='min-h-screen bg-gray-100 flex flex-col justify-center items-center'>
+                <h1>Welcome {user?.name}</h1>
+                <button onClick={onSignOut}>Logout</button>
+            </div>
+        </Layout>
     );
 };
 

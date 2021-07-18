@@ -54,7 +54,6 @@ const Profile = ({ data }) => {
                 <title>
                     {user.name} (@{user.username})
                 </title>
-                />
             </Head>
             <div className='min-h-screen bg-gray-100'>
                 <header className='pt-[54px] max-w-[975px] mx-auto sm:border-b'>

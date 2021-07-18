@@ -54,9 +54,6 @@ const Profile = ({ data }) => {
                 <title>
                     {user.name} (@{user.username})
                 </title>
-                <meta
-                    name='viewport'
-                    content='initial-scale=1.0, width=device-width'
                 />
             </Head>
             <div className='min-h-screen bg-gray-100'>

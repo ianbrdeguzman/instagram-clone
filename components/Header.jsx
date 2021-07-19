@@ -24,7 +24,7 @@ const Header = () => {
     };
 
     return (
-        <header className='border-b w-screen fixed top-0 left-0 bg-white px-[20px]'>
+        <header className='border-b w-screen fixed top-0 left-0 bg-white px-[20px] z-10'>
             <div className='flex justify-between items-center h-[54px] max-w-[975px] mx-auto'>
                 <div className='max-w-[975px] flex items-center'>
                     <Link href='/'>

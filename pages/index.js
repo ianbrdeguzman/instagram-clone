@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import useAuth from '../hooks/useAuth';
 import Head from 'next/head';
+import usePost from '../hooks/usePost';
 
 export const getServerSideProps = ({ req, res }) => {
     if (req.headers.cookie) {
@@ -24,13 +25,8 @@ export const getServerSideProps = ({ req, res }) => {
 };
 
 const Home = () => {
-    const { user, logout } = useAuth();
-    const { push } = useRouter();
-
-    const onSignOut = async () => {
-        await logout();
-        push('/accounts/login');
-    };
+    const { loading, posts, error } = usePost();
+    console.log(loading, posts);
 
     return (
         <Layout>
@@ -38,8 +34,9 @@ const Home = () => {
                 <title>Instagram | Clone</title>
             </Head>
             <div className='min-h-screen bg-gray-100 flex flex-col justify-center items-center'>
-                <h1>Welcome {user?.name}</h1>
-                <button onClick={onSignOut}>Logout</button>
+                {posts?.map(({ title, id }) => {
+                    return <h2 key={id}>{title}</h2>;
+                })}
             </div>
         </Layout>
     );

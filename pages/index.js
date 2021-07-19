@@ -1,9 +1,7 @@
 import cookie from 'cookie';
-import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
-import useAuth from '../hooks/useAuth';
 import Head from 'next/head';
-import usePost from '../hooks/usePost';
+import PostList from '../components/PostList';
 
 export const getServerSideProps = ({ req, res }) => {
     if (req.headers.cookie) {
@@ -25,19 +23,12 @@ export const getServerSideProps = ({ req, res }) => {
 };
 
 const Home = () => {
-    const { loading, posts, error } = usePost();
-    console.log(loading, posts);
-
     return (
         <Layout>
             <Head>
                 <title>Instagram | Clone</title>
             </Head>
-            <div className='min-h-screen bg-gray-100 flex flex-col justify-center items-center'>
-                {posts?.map(({ title, id }) => {
-                    return <h2 key={id}>{title}</h2>;
-                })}
-            </div>
+            <PostList />
         </Layout>
     );
 };

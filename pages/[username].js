@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import Image from 'next/image';
 import Head from 'next/head';
 import { FiSettings } from 'react-icons/fi';
+import { MdGridOn } from 'react-icons/md';
+import useAuth from '../hooks/useAuth';
 
 export const getStaticPaths = async () => {
     try {
@@ -48,6 +50,8 @@ export const getStaticProps = async (context) => {
 
 const Profile = ({ data }) => {
     const user = JSON.parse(data);
+    const { user: loginUser } = useAuth();
+
     return (
         <Layout>
             <Head>
@@ -83,16 +87,26 @@ const Profile = ({ data }) => {
                                 <h2 className='text-3xl font-light mr-4'>
                                     {user.username}
                                 </h2>
-                                <button className='hidden sm:block border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold mr-4'>
+                                {user.username === loginUser?.username && (
+                                    <>
+                                        <button className='hidden sm:block border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold mr-4'>
+                                            Edit Profile
+                                        </button>
+                                        <button className='text-xl'>
+                                            <FiSettings />
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                            {user.username === loginUser?.username ? (
+                                <button className='border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold sm:hidden'>
                                     Edit Profile
                                 </button>
-                                <button className='text-xl'>
-                                    <FiSettings />
+                            ) : (
+                                <button className='border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold sm:hidden'>
+                                    Follow
                                 </button>
-                            </div>
-                            <button className='border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold sm:hidden'>
-                                Edit Profile
-                            </button>
+                            )}
                             <ul className='hidden sm:flex'>
                                 <li className='mr-10'>
                                     <span className='font-semibold'>0</span>{' '}
@@ -108,14 +122,28 @@ const Profile = ({ data }) => {
                                 </li>
                             </ul>
                             <p className='py-2 font-semibold hidden sm:block'>
-                                {user.name}
+                                {user.name} or bio
                             </p>
                         </section>
                     </div>
                 </header>
-                <div className='sm:hidden border-b px-4 pb-4 font-semibold'>
-                    <p>{user.name}</p>
+                <div className='sm:hidden px-4 pb-4 font-semibold'>
+                    <p>{user.name} or bio</p>
                 </div>
+                <ul className='sm:hidden p-4 grid grid-cols-3 text-sm text-gray-500 border-b border-t'>
+                    <li className='flex flex-col text-center'>
+                        <span className='font-semibold text-black'>0</span>
+                        posts
+                    </li>
+                    <li className='flex flex-col text-center'>
+                        <span className='font-semibold text-black'>54</span>
+                        followers
+                    </li>
+                    <li className='flex flex-col text-center'>
+                        <span className='font-semibold text-black'>27</span>
+                        following
+                    </li>
+                </ul>
             </div>
         </Layout>
     );

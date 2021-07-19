@@ -14,7 +14,10 @@ const handler = async (req, res) => {
             const post = new Post({
                 title,
                 body,
-                user: currentUser._id,
+                user: {
+                    id: currentUser._id,
+                    username: currentUser.username,
+                },
             });
 
             const createdPost = await post.save();

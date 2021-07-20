@@ -12,7 +12,7 @@ const Post = ({ post }) => {
         _id,
         title,
         body,
-        user: { id, username },
+        user: { _id: userId, username },
     } = post;
 
     const { user } = useAuth();

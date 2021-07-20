@@ -5,10 +5,7 @@ const postSchema = mongoose.Schema(
         title: { type: String, required: true },
         body: { type: String, required: true },
         photo: { type: String, default: 'no photo' },
-        user: {
-            id: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
-            username: { type: String, required: true },
-        },
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     },
     {
         timestamps: true,

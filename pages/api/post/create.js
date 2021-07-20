@@ -8,16 +8,10 @@ const handler = async (req, res) => {
             // check post title and body
             if (!title || !body) throw new Error('Bad request.');
 
-            // get user from withToken middleware
-            const currentUser = req.user;
-
             const post = new Post({
                 title,
                 body,
-                user: {
-                    id: currentUser._id,
-                    username: currentUser.username,
-                },
+                user: req.user._id,
             });
 
             const createdPost = await post.save();

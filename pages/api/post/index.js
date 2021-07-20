@@ -3,15 +3,16 @@ import withToken from '../../../middlewares/withToken';
 
 const handler = async (req, res) => {
     if (req.method === 'GET') {
-        try {
-            const posts = await Post.find({});
-
-            res.status(200).send(posts);
-        } catch (error) {
-            res.status(400).send({
-                message: error.message,
+        Post.find()
+            .populate('user', '_id name username')
+            .then((posts) => {
+                res.status(200).send(posts);
+            })
+            .catch((err) => {
+                res.status(500).send({
+                    message: err.message,
+                });
             });
-        }
     } else {
         res.status(400).send({
             message: 'This is not a GET request.',

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import usePost from '../hooks/usePost';
 import Post from '../components/Post';
 
 const PostList = () => {
-    const { loading, posts } = usePost();
+    const { loading, posts, getAllPosts } = usePost();
+
+    useEffect(() => {
+        getAllPosts();
+    }, []);
     return (
         <div className='min-h-screen bg-gray-100 flex flex-col justify-center items-center pt-[62px]'>
             {loading ? (

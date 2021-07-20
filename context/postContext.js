@@ -8,32 +8,26 @@ export const PostProvider = ({ children }) => {
     const [posts, setPosts] = useState([]);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const getAllPosts = async () => {
-            try {
-                setError(null);
-                setLoading(true);
-                const { data } = await axios.get('/api/post', {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            'token'
-                        )}`,
-                    },
-                });
+    const getAllPosts = async () => {
+        try {
+            setError(null);
+            setLoading(true);
+            const { data } = await axios.get('/api/post', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
 
-                if (data) setPosts(data);
-                setLoading(false);
-            } catch (error) {
-                setLoading(false);
-                setError(error.message);
-            }
-        };
-
-        getAllPosts();
-    }, []);
+            if (data) setPosts(data);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            setError(error.message);
+        }
+    };
 
     return (
-        <PostContext.Provider value={{ loading, posts, error }}>
+        <PostContext.Provider value={{ loading, posts, error, getAllPosts }}>
             {children}
         </PostContext.Provider>
     );

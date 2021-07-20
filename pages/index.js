@@ -2,6 +2,7 @@ import cookie from 'cookie';
 import Layout from '../components/Layout';
 import Head from 'next/head';
 import PostList from '../components/PostList';
+import Sidebar from '../components/Sidebar';
 
 export const getServerSideProps = ({ req, res }) => {
     if (req.headers.cookie) {
@@ -28,7 +29,10 @@ const Home = () => {
             <Head>
                 <title>Instagram | Clone</title>
             </Head>
-            <PostList />
+            <div className='bg-gray-100 flex justify-center items-start'>
+                <PostList />
+                <Sidebar />
+            </div>
         </Layout>
     );
 };

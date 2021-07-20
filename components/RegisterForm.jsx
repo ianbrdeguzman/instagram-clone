@@ -18,9 +18,7 @@ const RegisterForm = () => {
 
     const onRegister = async (data) => {
         await registerUser(data);
-        if (error === null) {
-            push('/accounts/login');
-        }
+        if (error === null) push('/accounts/login');
     };
 
     return (
@@ -45,7 +43,7 @@ const RegisterForm = () => {
                 <label className='relative'>
                     <input
                         type='text'
-                        {...register('emailRegister', {
+                        {...register('email', {
                             required: true,
                             pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                         })}
@@ -56,7 +54,7 @@ const RegisterForm = () => {
                         autoCorrect='off'
                         className='w-full border p-2 outline-none focus:ring-1 focus:ring-gray-500 rounded-sm mb-2 bg-gray-100'
                     />
-                    {errors.emailRegister && (
+                    {errors.email && (
                         <span className='absolute top-0 right-1 text-base text-red-500'>
                             <AiOutlineCloseCircle />
                         </span>
@@ -107,7 +105,7 @@ const RegisterForm = () => {
                 <label className='relative'>
                     <input
                         type='password'
-                        {...register('passwordRegister', {
+                        {...register('password', {
                             required: true,
                             minLength: 6,
                             maxLength: 20,
@@ -120,14 +118,14 @@ const RegisterForm = () => {
                         autoComplete='on'
                         className='w-full border p-2 outline-none focus:ring-1 focus:ring-gray-500 rounded-sm bg-gray-100'
                     />
-                    {errors.passwordRegister && (
+                    {errors.password && (
                         <span className='absolute top-0 right-1 text-base text-red-500'>
                             <AiOutlineCloseCircle />
                         </span>
                     )}
                 </label>
-                {watch('passwordRegister')?.length >= 6 &&
-                watch('emailRegister')?.length !== 0 ? (
+                {watch('password')?.length >= 6 &&
+                watch('email')?.length !== 0 ? (
                     <button
                         className='bg-blue-500 w-full py-2 my-4 rounded text-white font-semibold'
                         type='submit'

@@ -7,10 +7,9 @@ export default async function handler(req, res) {
         try {
             await dbConnect();
 
-            const { emailRegister, name, username, passwordRegister } =
-                req.body;
+            const { email, name, username, password } = req.body;
 
-            const userEmail = await User.findOne({ email: emailRegister });
+            const userEmail = await User.findOne({ email });
 
             if (userEmail) throw new Error('Email address is already taken.');
 
@@ -19,10 +18,10 @@ export default async function handler(req, res) {
             if (userHandle) throw new Error('Username is already taken.');
 
             const newUser = new User({
-                email: emailRegister,
+                email,
                 name,
                 username,
-                password: await bcrypt.hash(passwordRegister, 6),
+                password: await bcrypt.hash(password, 6),
             });
 
             const createdUser = await newUser.save();
@@ -33,7 +32,7 @@ export default async function handler(req, res) {
                 message: 'Registration successful.',
             });
         } catch (error) {
-            res.status(500).send({
+            res.status(422).send({
                 message: error.message,
             });
         }

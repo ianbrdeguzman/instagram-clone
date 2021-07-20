@@ -1,7 +1,7 @@
 import Error from '../components/Error';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { AiFillFacebook, AiOutlineCloseCircle } from 'react-icons/ai';
-import { useRouter } from 'next/router';
 import useRegister from '../hooks/useRegister';
 
 const RegisterForm = () => {
@@ -12,13 +12,10 @@ const RegisterForm = () => {
         formState: { errors },
     } = useForm();
 
-    const { register: registerUser, loading, error } = useRegister();
-
-    const { push } = useRouter();
+    const { register: registerUser, loading, error, success } = useRegister();
 
     const onRegister = async (data) => {
         await registerUser(data);
-        if (error === null) push('/accounts/login');
     };
 
     return (
@@ -39,6 +36,14 @@ const RegisterForm = () => {
                 </div>
                 <div className='border-t flex-1 mt-2'></div>
             </div>
+            {success && (
+                <p className='text-sm mb-4 border w-3/4 text-center py-1 rounded bg-green-100 text-gray-500'>
+                    {success.message}{' '}
+                    <Link href='/accounts/login'>
+                        <a className='text-blue-500 font-semibold'>Log In</a>
+                    </Link>
+                </p>
+            )}
             <form className='w-3/4 text-xs' onSubmit={handleSubmit(onRegister)}>
                 <label className='relative'>
                     <input

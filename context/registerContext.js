@@ -5,13 +5,16 @@ export const RegisterContext = createContext();
 
 export const RegisterProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
 
     const register = async (data) => {
         try {
             setError(null);
             setLoading(true);
-            await axios.post('/api/register', data);
+            const response = await axios.post('/api/register', data);
+            console.log(response);
+            setSuccess(response.data);
             setLoading(false);
         } catch (error) {
             setLoading(false);
@@ -27,6 +30,7 @@ export const RegisterProvider = ({ children }) => {
         <RegisterContext.Provider
             value={{
                 loading,
+                success,
                 register,
                 error,
             }}

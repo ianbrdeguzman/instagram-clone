@@ -41,7 +41,7 @@ const Post = ({ post }) => {
             <main>
                 <Image
                     src='/images/sample.jpg'
-                    alt='post 1'
+                    alt='post'
                     width={600}
                     height={600}
                     priority='true'
@@ -91,18 +91,18 @@ const Post = ({ post }) => {
                     placeholder='Add a comment...'
                     className='flex-1 px-4 outline-none'
                 />
-                {watch('comment')?.length === 0 ? (
+                {watch('comment')?.length > 0 ? (
                     <button
-                        disabled
                         type='submit'
-                        className='text-blue-500 opacity-50 font-semibold'
+                        className='text-blue-500 font-semibold'
                     >
                         Post
                     </button>
                 ) : (
                     <button
+                        disabled
                         type='submit'
-                        className='text-blue-500 font-semibold'
+                        className='text-blue-500 opacity-50 font-semibold'
                     >
                         Post
                     </button>

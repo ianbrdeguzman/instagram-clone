@@ -1,55 +1,15 @@
 import dbConnect from '../utils/dbConnect';
 import User from '../models/userModel';
+import Post from '../models/postModel';
 import Layout from '../components/Layout';
 import Image from 'next/image';
 import Head from 'next/head';
 import { FiSettings } from 'react-icons/fi';
-import { MdGridOn } from 'react-icons/md';
 import useAuth from '../hooks/useAuth';
 
-export const getStaticPaths = async () => {
-    try {
-        await dbConnect();
-
-        const users = await User.find({});
-
-        const paths = users.map((user) => {
-            return {
-                params: { username: user.username },
-            };
-        });
-
-        return {
-            paths: paths,
-            fallback: false,
-        };
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-export const getStaticProps = async (context) => {
-    const username = context.params.username;
-    try {
-        await dbConnect();
-
-        const user = await User.findOne({ username });
-
-        const userProfile = {
-            email: user.email,
-            name: user.name,
-            username: user.username,
-        };
-        return {
-            props: { data: JSON.stringify(userProfile) },
-        };
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-const Profile = ({ data }) => {
+const Profile = ({ data, posts }) => {
     const user = JSON.parse(data);
+    const postsList = JSON.parse(posts);
     const { user: loginUser } = useAuth();
 
     return (
@@ -144,9 +104,72 @@ const Profile = ({ data }) => {
                         following
                     </li>
                 </ul>
+                <main className='grid grid-cols-3 max-w-[975px] mx-auto gap-1 sm:gap-4'>
+                    {postsList.map((post) => {
+                        return (
+                            <div key={post._id}>
+                                <Image
+                                    src='/images/sample.jpg'
+                                    alt='Post'
+                                    width={600}
+                                    height={600}
+                                    layout='responsive'
+                                    priority='true'
+                                />
+                            </div>
+                        );
+                    })}
+                </main>
             </div>
         </Layout>
     );
 };
 
 export default Profile;
+
+export const getStaticPaths = async () => {
+    try {
+        await dbConnect();
+
+        const users = await User.find({});
+
+        const paths = users.map((user) => {
+            return {
+                params: { username: user.username },
+            };
+        });
+
+        return {
+            paths: paths,
+            fallback: false,
+        };
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getStaticProps = async (context) => {
+    console.log(context);
+    const username = context.params.username;
+    try {
+        await dbConnect();
+
+        const user = await User.findOne({ username });
+
+        const posts = await Post.find({ user: user._id });
+
+        const userProfile = {
+            email: user.email,
+            name: user.name,
+            username: user.username,
+        };
+        return {
+            props: {
+                data: JSON.stringify(userProfile),
+                posts: JSON.stringify(posts),
+            },
+        };
+    } catch (error) {
+        console.log(error);
+    }
+};

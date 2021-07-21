@@ -13,7 +13,6 @@ export const RegisterProvider = ({ children }) => {
             setError(null);
             setLoading(true);
             const response = await axios.post('/api/register', data);
-            console.log(response);
             setSuccess(response.data);
             setLoading(false);
         } catch (error) {

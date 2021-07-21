@@ -80,10 +80,10 @@ const Header = () => {
                             onClick={() => setShow(!show)}
                             className='text-sm m border rounded-full bg-gray-100 w-[28px] h-[28px] overflow-hidden'
                         >
-                            {user?.image && (
+                            {user && (
                                 <Image
-                                    src={user?.image}
-                                    alt={user?.username}
+                                    src={user.image}
+                                    alt={user.username}
                                     width={28}
                                     height={28}
                                     layout='responsive'
@@ -111,11 +111,15 @@ const Header = () => {
                                     </span>
                                     Saved
                                 </li>
-                                <li className='py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center'>
-                                    <span className='mr-2 text-base'>
-                                        <FiSettings />
-                                    </span>
-                                    Settings
+                                <li className='py-2 px-4 cursor-pointer hover:bg-gray-100'>
+                                    <Link href='/accounts/edit'>
+                                        <a className='flex items-center'>
+                                            <span className='mr-2 text-base'>
+                                                <FiSettings />
+                                            </span>
+                                            Settings
+                                        </a>
+                                    </Link>
                                 </li>
                                 <li className='py-2 px-4 cursor-pointer hover:bg-gray-100 flex items-center'>
                                     <span className='mr-2 text-base'>

@@ -5,6 +5,7 @@ const handler = async (req, res) => {
     if (req.method === 'GET') {
         Post.find()
             .populate('user', '_id name username')
+            .sort({ createdAt: 'desc' })
             .then((posts) => {
                 res.status(200).send(posts);
             })

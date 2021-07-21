@@ -43,6 +43,10 @@ export default async function handler(req, res) {
                 name: user.name,
                 username: user.username,
                 image: user.image,
+                website: user.website,
+                bio: user.bio,
+                phone: user.phone,
+                gender: user.gender,
                 token: token,
             });
         } catch (error) {

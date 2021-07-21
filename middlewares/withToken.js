@@ -56,7 +56,7 @@ const withToken = (handler) => {
             );
 
             // check if user is db
-            const currentUser = await User.findById(accessTokenUser._id);
+            let currentUser = await User.findById(accessTokenUser._id);
 
             if (!currentUser) throw new Error('User not found.');
 
@@ -83,6 +83,10 @@ const withToken = (handler) => {
                     name: currentUser.name,
                     username: currentUser.username,
                     image: currentUser.image,
+                    website: currentUser.website,
+                    bio: currentUser.bio,
+                    phone: currentUser.phone,
+                    gender: currentUser.gender,
                 };
 
                 req.user = { ...user, token: newAccessToken };

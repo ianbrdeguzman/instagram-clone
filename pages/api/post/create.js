@@ -4,19 +4,23 @@ import withToken from '../../../middlewares/withToken';
 const handler = async (req, res) => {
     if (req.method === 'POST') {
         try {
-            const { title, body } = req.body;
-            // check post title and body
-            if (!title || !body) throw new Error('Bad request.');
+            const { caption, image } = req.body;
+
+            if (!caption || !image) throw new Error('Bad request.');
 
             const post = new Post({
-                title,
-                body,
+                caption,
+                image,
                 user: req.user._id,
             });
 
             const createdPost = await post.save();
 
-            res.status(200).send(createdPost);
+            const populatedPost = await Post.findOne({
+                _id: createdPost._id,
+            }).populate('user', '_id name username');
+
+            res.status(200).send(populatedPost);
         } catch (error) {
             res.status(400).send({
                 message: error.message,

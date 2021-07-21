@@ -82,6 +82,7 @@ const withToken = (handler) => {
                     email: currentUser.email,
                     name: currentUser.name,
                     username: currentUser.username,
+                    image: currentUser.image,
                 };
 
                 req.user = { ...user, token: newAccessToken };

@@ -78,11 +78,17 @@ const Header = () => {
                     <div className='relative'>
                         <button
                             onClick={() => setShow(!show)}
-                            className='flex justify-center items-center text-sm m border rounded-full bg-gray-100 w-[28px] h-[28px]'
+                            className='text-sm m border rounded-full bg-gray-100 w-[28px] h-[28px] overflow-hidden'
                         >
-                            <span className='uppercase'>
-                                {user?.username.substring(0, 2)}
-                            </span>
+                            {user?.image && (
+                                <Image
+                                    src={user?.image}
+                                    alt={user?.username}
+                                    width={28}
+                                    height={28}
+                                    layout='responsive'
+                                />
+                            )}
                         </button>
                         {show && (
                             <ul className='w-[230px] bg-white absolute top-[40px] right-0 text-sm rounded shadow'>

@@ -10,8 +10,8 @@ import useAuth from '../hooks/useAuth';
 const Post = ({ post }) => {
     const {
         _id,
-        title,
-        body,
+        caption,
+        image,
         user: { _id: userId, username },
     } = post;
 
@@ -40,7 +40,7 @@ const Post = ({ post }) => {
             </header>
             <main>
                 <Image
-                    src='/images/sample.jpg'
+                    src={image}
                     alt='post'
                     width={600}
                     height={600}
@@ -72,7 +72,7 @@ const Post = ({ post }) => {
                 </div>
                 <div className='flex'>
                     <h3 className='mr-4 font-semibold'>{username}</h3>
-                    <p>{body}</p>
+                    <p>{caption}</p>
                 </div>
             </footer>
             <form

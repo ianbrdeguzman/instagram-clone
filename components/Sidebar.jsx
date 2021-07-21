@@ -33,8 +33,16 @@ const Sidebar = () => {
             <div className='mt-[62px] min-w-[300px] ml-4 hidden lg:block sticky top-[62px] text-sm text-gray-500'>
                 <header className='p-4 flex justify-between items-center'>
                     <Link href={`/${user.username}`}>
-                        <a className='border w-[56px] h-[56px] flex justify-center items-center uppercase rounded-full mr-4'>
-                            {user.username.substring(0, 2)}
+                        <a className='border w-[56px] h-[56px] rounded-full mr-4 overflow-hidden'>
+                            {user?.image && (
+                                <Image
+                                    src={user.image}
+                                    alt={user.username}
+                                    width={56}
+                                    height={56}
+                                    layout='responsive'
+                                />
+                            )}
                         </a>
                     </Link>
                     <div className='flex-1'>

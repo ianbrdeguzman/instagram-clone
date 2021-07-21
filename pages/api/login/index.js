@@ -42,6 +42,7 @@ export default async function handler(req, res) {
                 email: user.email,
                 name: user.name,
                 username: user.username,
+                image: user.image,
                 token: token,
             });
         } catch (error) {

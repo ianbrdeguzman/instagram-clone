@@ -1,12 +1,11 @@
 import Error from '../components/Error';
 import { useForm } from 'react-hook-form';
-import useReset from '../hooks/useReset';
-import { useEffect } from 'react';
+import usePassword from '../hooks/usePassword';
 
 const PasswordResetForm = () => {
     const { register, handleSubmit, watch } = useForm();
 
-    const { forgotPassword, error, loading, data: response } = useReset();
+    const { forgotPassword, error, loading, data: response } = usePassword();
 
     const onSubmit = async (data) => {
         forgotPassword(data.email);

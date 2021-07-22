@@ -1,7 +1,7 @@
 import Error from '../components/Error';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import useReset from '../hooks/useReset';
+import usePassword from '../hooks/usePassword';
 
 const PasswordResetForm = () => {
     const {
@@ -11,7 +11,7 @@ const PasswordResetForm = () => {
         formState: { errors },
     } = useForm();
 
-    const { resetPassword, error, loading, data: response } = useReset();
+    const { resetPassword, error, loading, data: response } = usePassword();
 
     const { push, query } = useRouter();
 

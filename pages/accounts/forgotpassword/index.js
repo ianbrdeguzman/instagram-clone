@@ -2,25 +2,6 @@ import ForgotPasswordForm from '../../../components/ForgotPasswordForm';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export const getServerSideProps = ({ req, res }) => {
-    if (req.headers.cookie) {
-        const { refreshToken } = cookie.parse(req.headers.cookie);
-
-        if (refreshToken) {
-            return {
-                redirect: {
-                    destination: '/',
-                    permanent: false,
-                },
-            };
-        }
-    } else {
-        return {
-            props: {},
-        };
-    }
-};
-
 const ForgotPassword = () => {
     return (
         <div className='flex flex-col items-center justify-center h-screen'>

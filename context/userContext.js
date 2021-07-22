@@ -1,11 +1,12 @@
 import { createContext, useState } from 'react';
 import axios from 'axios';
 
-export const RegisterContext = createContext();
+export const UserContext = createContext();
 
-export const RegisterProvider = ({ children }) => {
+export const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(null);
+    const [data, setData] = useState(null);
     const [error, setError] = useState(null);
 
     const register = async (data) => {
@@ -25,16 +26,21 @@ export const RegisterProvider = ({ children }) => {
         }
     };
 
+    const editProfile = async (data) => {
+        console.log(data);
+    };
+
     return (
-        <RegisterContext.Provider
+        <UserContext.Provider
             value={{
                 loading,
                 success,
-                register,
                 error,
+                register,
+                editProfile,
             }}
         >
             {children}
-        </RegisterContext.Provider>
+        </UserContext.Provider>
     );
 };

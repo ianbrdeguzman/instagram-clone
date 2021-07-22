@@ -2,7 +2,7 @@ import Error from '../components/Error';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { AiFillFacebook, AiOutlineCloseCircle } from 'react-icons/ai';
-import useRegister from '../hooks/useRegister';
+import useUser from '../hooks/useUser';
 
 const RegisterForm = () => {
     const {
@@ -12,7 +12,7 @@ const RegisterForm = () => {
         formState: { errors },
     } = useForm();
 
-    const { register: registerUser, loading, error, success } = useRegister();
+    const { register: registerUser, loading, error, success } = useUser();
 
     const onRegister = async (data) => {
         await registerUser(data);

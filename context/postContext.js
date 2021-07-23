@@ -1,36 +1,77 @@
 import axios from 'axios';
-import { createContext, useState } from 'react';
+import { createContext, useState, useReducer } from 'react';
 
 export const PostContext = createContext();
 
+const initialState = {
+    loading: false,
+    postLoading: false,
+    posts: [],
+    error: null,
+};
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'POST_GET_REQUEST':
+            return {
+                ...state,
+                loading: true,
+            };
+        case 'POST_GET_SUCCESS':
+            return {
+                ...state,
+                posts: action.payload,
+                loading: false,
+            };
+        case 'POST_GET_FAIL':
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
+            };
+        case 'POST_CREATE_REQUEST':
+            return {
+                ...state,
+                postLoading: true,
+            };
+        case 'POST_CREATE_SUCCESS':
+            return {
+                ...state,
+                posts: [action.payload, ...state.posts],
+                postLoading: false,
+            };
+        case 'POST_CREATE_FAIL':
+            return {
+                ...state,
+                error: action.payload,
+                postLoading: false,
+            };
+        default:
+            return { ...state };
+    }
+};
+
 export const PostProvider = ({ children }) => {
-    const [loading, setLoading] = useState(false);
-    const [createPostLoading, setCreatePostLoading] = useState(false);
-    const [posts, setPosts] = useState([]);
-    const [error, setError] = useState(null);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const getAllPosts = async () => {
         try {
-            setError(null);
-            setLoading(true);
+            dispatch({ type: 'POST_GET_REQUEST' });
             const { data } = await axios.get('/api/post', {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
 
-            if (data) setPosts(data);
-            setLoading(false);
+            dispatch({ type: 'POST_GET_SUCCESS', payload: data });
         } catch (error) {
-            setLoading(false);
-            setError(error.message);
+            dispatch({ type: 'POST_GET_FAIL', payload: error.message });
         }
     };
 
     const createPost = async (data, image) => {
         try {
-            setError(null);
-            setCreatePostLoading(true);
+            dispatch({ type: 'POST_CREATE_REQUEST' });
 
             // set formData
             const formData = new FormData();
@@ -51,34 +92,22 @@ export const PostProvider = ({ children }) => {
             };
 
             // post to create post api route
-            const { data: postData } = await axios.post(
-                '/api/post/create',
-                body,
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            'token'
-                        )}`,
-                    },
-                }
-            );
-            const newPosts = [postData, ...posts];
+            const response = await axios.post('/api/post/create', body, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
 
-            setPosts(newPosts);
-            setCreatePostLoading(false);
+            dispatch({ type: 'POST_CREATE_SUCCESS', payload: response.data });
         } catch (error) {
-            setError(error.message);
-            setCreatePostLoading(false);
+            dispatch({ type: 'POST_CREATE_FAIL', payload: error.message });
         }
     };
 
     return (
         <PostContext.Provider
             value={{
-                loading,
-                createPostLoading,
-                posts,
-                error,
+                ...state,
                 getAllPosts,
                 createPost,
             }}

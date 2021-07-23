@@ -1,16 +1,17 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import dbConnect from '../../../utils/dbConnect';
+import User from '../../../models/userModel';
 import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
 import EditProfileForm from '../../../components/forms/EditProfileForm';
 import Layout from '../../../components/Layout';
-import useAuth from '../../../hooks/useAuth';
 
-const EditProfile = () => {
-    const { user } = useAuth();
-
+const EditProfile = ({ data }) => {
     const [selected, setSelected] = useState('edit');
+
+    const { user } = JSON.parse(data);
 
     return (
         <Layout>
@@ -100,3 +101,43 @@ const EditProfile = () => {
 };
 
 export default EditProfile;
+
+export const getStaticPaths = async () => {
+    try {
+        await dbConnect();
+
+        const users = await User.find({});
+
+        const paths = users.map((user) => {
+            return {
+                params: { username: user.username },
+            };
+        });
+
+        return {
+            paths: paths,
+            fallback: false,
+        };
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getStaticProps = async (context) => {
+    const username = context.params.username;
+    try {
+        await dbConnect();
+
+        let user = await User.findOne({ username });
+
+        user.password = undefined;
+
+        return {
+            props: {
+                data: JSON.stringify(user),
+            },
+        };
+    } catch (error) {
+        console.log(error);
+    }
+};

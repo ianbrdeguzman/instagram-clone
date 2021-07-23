@@ -59,7 +59,9 @@ const Profile = ({ data, posts }) => {
                                     {user.username}
                                 </h2>
                                 {user.username === loginUser?.username ? (
-                                    <Link href='/accounts/edit'>
+                                    <Link
+                                        href={`/accounts/edit/${user.username}`}
+                                    >
                                         <a className='hidden sm:block border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold mr-4'>
                                             Edit Profile
                                         </a>

@@ -1,6 +1,6 @@
-import Error from '../components/Error';
+import Error from '../Error';
 import { useForm } from 'react-hook-form';
-import usePassword from '../hooks/usePassword';
+import usePassword from '../../hooks/usePassword';
 
 const PasswordResetForm = () => {
     const { register, handleSubmit, watch } = useForm();

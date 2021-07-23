@@ -2,8 +2,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import ChangePasswordForm from '../../../components/ChangePasswordForm';
-import EditProfileForm from '../../../components/EditProfileForm';
+import ChangePasswordForm from '../../../components/forms/ChangePasswordForm';
+import EditProfileForm from '../../../components/forms/EditProfileForm';
 import Layout from '../../../components/Layout';
 import useAuth from '../../../hooks/useAuth';
 

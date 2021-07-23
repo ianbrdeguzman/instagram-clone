@@ -1,8 +1,8 @@
-import Error from '../components/Error';
+import Error from '../Error';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { AiFillFacebook, AiOutlineCloseCircle } from 'react-icons/ai';
-import useUser from '../hooks/useUser';
+import useUser from '../../hooks/useUser';
 
 const RegisterForm = () => {
     const {

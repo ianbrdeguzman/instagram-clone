@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
-import useAuth from '../hooks/useAuth';
-import useUser from '../hooks/useUser';
+import useAuth from '../../hooks/useAuth';
+import useUser from '../../hooks/useUser';
 
 const EditProfileForm = () => {
     const { register, handleSubmit, reset } = useForm();

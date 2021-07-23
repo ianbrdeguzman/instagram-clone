@@ -1,7 +1,7 @@
-import Error from '../components/Error';
+import Error from '../Error';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import usePassword from '../hooks/usePassword';
+import usePassword from '../../hooks/usePassword';
 
 const PasswordResetForm = () => {
     const {

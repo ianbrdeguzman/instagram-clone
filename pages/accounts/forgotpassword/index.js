@@ -1,6 +1,6 @@
-import ForgotPasswordForm from '../../../components/ForgotPasswordForm';
 import Link from 'next/link';
 import Image from 'next/image';
+import ForgotPasswordForm from '../../../components/forms/ForgotPasswordForm';
 
 const ForgotPassword = () => {
     return (

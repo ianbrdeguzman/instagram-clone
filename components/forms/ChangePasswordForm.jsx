@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
-import useAuth from '../hooks/useAuth';
-import usePassword from '../hooks/usePassword';
+import useAuth from '../../hooks/useAuth';
+import usePassword from '../../hooks/usePassword';
 
 const ChangePasswordForm = () => {
     const {

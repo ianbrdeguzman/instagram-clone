@@ -1,7 +1,7 @@
-import PasswordResetForm from '../../../components/PasswordResetForm';
 import Link from 'next/link';
 import Image from 'next/image';
 import cookie from 'cookie';
+import PasswordResetForm from '../../../components/forms/PasswordResetForm';
 
 export const getServerSideProps = ({ req, res }) => {
     if (req.headers.cookie) {

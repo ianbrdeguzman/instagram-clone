@@ -3,7 +3,7 @@ import Image from 'next/image';
 import GetApp from '../../../components/GetApp';
 import Slider from '../../../components/Slider';
 import cookie from 'cookie';
-import LoginForm from '../../../components/LoginForm';
+import LoginForm from '../../../components/forms/LoginForm';
 
 export const getServerSideProps = ({ req, res }) => {
     if (req.headers.cookie) {

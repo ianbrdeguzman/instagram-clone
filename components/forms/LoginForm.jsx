@@ -1,8 +1,8 @@
-import Error from '../components/Error';
+import Error from '../Error';
 import { useForm } from 'react-hook-form';
 import { AiFillFacebook } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 import Link from 'next/link';
 
 const LoginForm = () => {

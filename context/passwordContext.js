@@ -60,7 +60,11 @@ export const PasswordProvider = ({ children }) => {
             setError(null);
             setData(null);
             setLoading(true);
-            const response = await axios.post('/api/change-password', data);
+            const response = await axios.post('/api/change-password', data, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
 
             setData(response.data);
             setLoading(false);

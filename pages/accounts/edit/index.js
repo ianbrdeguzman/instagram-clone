@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import ChangePasswordForm from '../../../components/ChangePasswordForm';
+import EditProfileForm from '../../../components/EditProfileForm';
 import Layout from '../../../components/Layout';
 import useAuth from '../../../hooks/useAuth';
 
@@ -43,10 +44,9 @@ const EditProfile = () => {
                         </li>
                     </ul>
                     <div className='w-full'>
-                        {selected === 'edit' && <div>Edit profile here</div>}
-                        {selected === 'change' && (
-                            <div className='p-4 pr-8 pt-8 w-full sm:min-w-[660px]'>
-                                <div className='flex items-center mb-8'>
+                        <div className='p-4 pr-8 pt-8 w-full sm:min-w-[660px]'>
+                            {user && (
+                                <div className='flex items-center'>
                                     <div className='sm:min-w-[200px]'>
                                         <div className='h-[38px] w-[38px] overflow-hidden rounded-full sm:ml-40'>
                                             <Image
@@ -64,6 +64,22 @@ const EditProfile = () => {
                                         </h2>
                                     </div>
                                 </div>
+                            )}
+                        </div>
+                        {selected === 'edit' && (
+                            <div className='p-4 pr-8 w-full sm:min-w-[660px]'>
+                                <EditProfileForm />
+                                <div className='sm:ml-[216px]'>
+                                    <Link href='/accounts/forgotpassword'>
+                                        <a className='text-sm text-blue-500 font-semibold'>
+                                            Forgot Password?
+                                        </a>
+                                    </Link>
+                                </div>
+                            </div>
+                        )}
+                        {selected === 'change' && (
+                            <div className='p-4 pr-8 w-full sm:min-w-[660px]'>
                                 <ChangePasswordForm />
                                 <div className='sm:ml-[216px]'>
                                     <Link href='/accounts/forgotpassword'>

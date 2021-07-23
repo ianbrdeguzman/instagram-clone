@@ -1,8 +1,9 @@
 import dbConnect from '../../../utils/dbConnect';
 import User from '../../../models/userModel';
 import bcrypt from 'bcryptjs';
+import withToken from '../../../middlewares/withToken';
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
     if (req.method === 'POST') {
         try {
             await dbConnect();
@@ -18,7 +19,8 @@ export default async function handler(req, res) {
 
             let updatedUser = await User.findOneAndUpdate(
                 { email: req.body.email },
-                { password: newPassword }
+                { password: newPassword },
+                { new: true }
             );
 
             updatedUser.password = undefined;
@@ -34,4 +36,6 @@ export default async function handler(req, res) {
             message: 'This is not a POST request.',
         });
     }
-}
+};
+
+export default withToken(handler);

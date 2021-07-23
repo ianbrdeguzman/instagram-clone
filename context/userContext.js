@@ -27,7 +27,27 @@ export const UserProvider = ({ children }) => {
     };
 
     const editProfile = async (data) => {
-        console.log(data);
+        try {
+            setError(null);
+            setData(null);
+            setLoading(true);
+
+            const response = await axios.post('/api/edit-profile', data, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            setData(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message
+            );
+            setLoading(false);
+        }
     };
 
     return (
@@ -36,6 +56,7 @@ export const UserProvider = ({ children }) => {
                 loading,
                 success,
                 error,
+                data,
                 register,
                 editProfile,
             }}

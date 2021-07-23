@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import GetApp from '../../../components/GetApp';
+import GetApp from '../../components/GetApp';
 import cookie from 'cookie';
-import RegisterForm from '../../../components/forms/RegisterForm';
+import RegisterForm from '../../components/forms/RegisterForm';
 
 export const getServerSideProps = ({ req, res }) => {
     if (req.headers.cookie) {

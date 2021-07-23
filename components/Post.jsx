@@ -5,7 +5,7 @@ import { FiSend } from 'react-icons/fi';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { MdBookmarkBorder } from 'react-icons/md';
 import { AiOutlineMessage, AiOutlineSmile } from 'react-icons/ai';
-import useAuth from '../hooks/useAuth';
+import useUser from '../hooks/useUser';
 
 const Post = ({ post }) => {
     const {
@@ -15,7 +15,7 @@ const Post = ({ post }) => {
         user: { _id: userId, username },
     } = post;
 
-    const { user } = useAuth();
+    const { user } = useUser();
 
     const { register, handleSubmit, watch } = useForm();
 

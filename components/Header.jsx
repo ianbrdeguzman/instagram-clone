@@ -1,5 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import useUser from '../hooks/useUser';
 import { BiSearch, BiBookmark } from 'react-icons/bi';
 import {
     AiOutlineHome,
@@ -10,11 +13,9 @@ import { CgProfile } from 'react-icons/cg';
 import { FiSend, FiSettings } from 'react-icons/fi';
 import { HiSwitchHorizontal } from 'react-icons/hi';
 import useAuth from '../hooks/useAuth';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 const Header = () => {
-    const { user, logout } = useAuth();
+    const { user, logout } = useUser();
     const { push } = useRouter();
     const [show, setShow] = useState(false);
 

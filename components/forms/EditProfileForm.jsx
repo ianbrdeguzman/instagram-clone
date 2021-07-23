@@ -1,13 +1,10 @@
 import { useForm } from 'react-hook-form';
-import useAuth from '../../hooks/useAuth';
 import useUser from '../../hooks/useUser';
 
 const EditProfileForm = () => {
     const { register, handleSubmit, reset } = useForm();
 
-    const { user } = useAuth();
-
-    const { editProfile, loading, data: updated, error } = useUser();
+    const { editProfile, loading, data: updated, error, user } = useUser();
 
     const handleOnSubmit = async (data) => {
         console.log(data);

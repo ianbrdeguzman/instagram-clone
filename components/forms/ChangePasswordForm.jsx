@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
-import useAuth from '../../hooks/useAuth';
 import usePassword from '../../hooks/usePassword';
+import useUser from '../../hooks/useUser';
 
 const ChangePasswordForm = () => {
     const {
@@ -11,7 +11,7 @@ const ChangePasswordForm = () => {
         reset,
     } = useForm();
 
-    const { user } = useAuth();
+    const { user } = useUser();
     const { changePassword, loading, data, error } = usePassword();
 
     const handleOnSubmit = async (data) => {

@@ -1,14 +1,14 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Error from '../Error';
 import { useForm } from 'react-hook-form';
+import useUser from '../../hooks/useUser';
 import { AiFillFacebook } from 'react-icons/ai';
-import { useRouter } from 'next/router';
-import useAuth from '../../hooks/useAuth';
-import Link from 'next/link';
 
 const LoginForm = () => {
     const { register, handleSubmit, watch } = useForm();
 
-    const { login, error, loading } = useAuth();
+    const { login, error, loading } = useUser();
 
     const { push } = useRouter();
 

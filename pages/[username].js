@@ -14,8 +14,7 @@ import ChangePhoto from '../components/modal/ChangePhoto';
 const Profile = ({ data, posts }) => {
     const user = JSON.parse(data);
     const postsList = JSON.parse(posts);
-    const { user: loginUser } = useAuth();
-    const { loading } = useUser();
+    const { user: loginUser, loading } = useUser();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 

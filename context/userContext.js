@@ -8,6 +8,7 @@ const initialState = {
     user: null,
     error: null,
     loadError: null,
+    success: false,
 };
 
 const reducer = (state, action) => {
@@ -58,6 +59,23 @@ const reducer = (state, action) => {
                 loading: false,
             };
         case 'USER_LOGOUT_FAIL':
+            return {
+                ...state,
+                error: action.payload,
+                loading: false,
+            };
+        case 'USER_REGISTER_REQUEST':
+            return {
+                ...state,
+                loading: true,
+            };
+        case 'USER_REGISTER_SUCCESS':
+            return {
+                ...state,
+                success: action.payload,
+                loading: false,
+            };
+        case 'USER_REGISTER_FAIL':
             return {
                 ...state,
                 error: action.payload,
@@ -116,7 +134,7 @@ export const UserProvider = ({ children }) => {
         try {
             dispatch({ type: 'USER_LOGOUT_REQUEST' });
 
-            await axios.post('/api/logout', {
+            await axios.post('/api/users/logout', {
                 withCredentials: true,
             });
 
@@ -135,18 +153,19 @@ export const UserProvider = ({ children }) => {
 
     const register = async (data) => {
         try {
-            setError(null);
-            setLoading(true);
+            dispatch({ type: 'USER_REGISTER_REQUEST' });
+
             const response = await axios.post('/api/register', data);
-            setSuccess(response.data);
-            setLoading(false);
+
+            dispatch({ type: 'USER_REGISTER_SUCCESS', payload: response.data });
         } catch (error) {
-            setLoading(false);
-            setError(
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-            );
+            dispatch({
+                type: 'USER_REGISTER_FAIL',
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
         }
     };
 

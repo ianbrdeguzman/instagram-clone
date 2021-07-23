@@ -6,7 +6,6 @@ import Image from 'next/image';
 import Head from 'next/head';
 import Link from 'next/link';
 import { FiSettings } from 'react-icons/fi';
-import useAuth from '../hooks/useAuth';
 import { useState } from 'react';
 import useUser from '../hooks/useUser';
 import ChangePhoto from '../components/modal/ChangePhoto';

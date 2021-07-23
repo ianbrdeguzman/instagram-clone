@@ -14,7 +14,7 @@ const LoginForm = () => {
 
     const onLogin = async (data) => {
         await login(data);
-        push('/');
+        if (!loading) push('/');
     };
 
     return (

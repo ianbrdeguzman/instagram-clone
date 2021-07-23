@@ -12,7 +12,6 @@ import {
 import { CgProfile } from 'react-icons/cg';
 import { FiSend, FiSettings } from 'react-icons/fi';
 import { HiSwitchHorizontal } from 'react-icons/hi';
-import useAuth from '../hooks/useAuth';
 
 const Header = () => {
     const { user, logout } = useUser();
@@ -77,11 +76,11 @@ const Header = () => {
                         </a>
                     </Link>
                     <div className='relative'>
-                        <button
-                            onClick={() => setShow(!show)}
-                            className='text-sm m border rounded-full bg-gray-100 w-[28px] h-[28px] overflow-hidden'
-                        >
-                            {user && (
+                        {user && (
+                            <button
+                                onClick={() => setShow(!show)}
+                                className='text-sm m border rounded-full bg-gray-100 w-[28px] h-[28px] overflow-hidden'
+                            >
                                 <Image
                                     src={user.image}
                                     alt={user.username}
@@ -89,8 +88,8 @@ const Header = () => {
                                     height={28}
                                     layout='responsive'
                                 />
-                            )}
-                        </button>
+                            </button>
+                        )}
                         {show && (
                             <ul className='w-[230px] bg-white absolute top-[40px] right-0 text-sm rounded shadow'>
                                 <Link

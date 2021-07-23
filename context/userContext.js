@@ -97,7 +97,7 @@ export const UserProvider = ({ children }) => {
         try {
             dispatch({ type: 'USER_LOGIN_REQUEST' });
 
-            const response = await axios.post('/api/login', data);
+            const response = await axios.post('/api/users/login', data);
 
             localStorage.setItem('token', response.data.token);
             dispatch({ type: 'USER_LOGIN_SUCCESS', payload: response.data });

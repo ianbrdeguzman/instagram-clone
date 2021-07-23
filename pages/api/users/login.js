@@ -1,18 +1,18 @@
 import dbConnect from '../../../utils/dbConnect';
 import User from '../../../models/userModel';
 import bcrypt from 'bcryptjs';
+import cookie from 'cookie';
 import {
     generateRefreshToken,
     generateToken,
 } from '../../../utils/generateToken';
-import cookie from 'cookie';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
             await dbConnect();
 
-            const user = await User.findOne({ email: req.body.email });
+            let user = await User.findOne({ email: req.body.email });
 
             if (!user)
                 throw new Error(
@@ -37,18 +37,11 @@ export default async function handler(req, res) {
                     path: '/',
                 })
             );
-            res.status(200).send({
-                _id: user._id,
-                email: user.email,
-                name: user.name,
-                username: user.username,
-                image: user.image,
-                website: user.website,
-                bio: user.bio,
-                phone: user.phone,
-                gender: user.gender,
-                token: token,
-            });
+
+            user.password = undefined;
+            user.token = token;
+
+            res.status(200).send(user);
         } catch (error) {
             res.status(404).send(error.message);
         }

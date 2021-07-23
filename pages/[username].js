@@ -7,7 +7,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { FiSettings } from 'react-icons/fi';
 import useAuth from '../hooks/useAuth';
-import Stats from '../components/Stats';
 
 const Profile = ({ data, posts }) => {
     const user = JSON.parse(data);
@@ -65,7 +64,20 @@ const Profile = ({ data, posts }) => {
                                     : 'Follow'}
                             </button>
                             <ul className='hidden sm:flex'>
-                                <Stats posts={postsList} location={'header'} />
+                                <li className='mr-10'>
+                                    <span className='font-semibold'>
+                                        {postsList.length}
+                                    </span>{' '}
+                                    posts
+                                </li>
+                                <li className='mr-10'>
+                                    <span className='font-semibold'>54</span>{' '}
+                                    followers
+                                </li>
+                                <li>
+                                    <span className='font-semibold'>27</span>{' '}
+                                    following
+                                </li>
                             </ul>
                             <p className='py-2 font-semibold hidden sm:block'>
                                 {user.name} or bio
@@ -77,7 +89,20 @@ const Profile = ({ data, posts }) => {
                     <p>{user.name} or bio</p>
                 </div>
                 <ul className='sm:hidden p-4 grid grid-cols-3 text-sm text-gray-500 border-b border-t'>
-                    <Stats posts={postsList} />
+                    <li className='flex flex-col text-center'>
+                        <span className='font-semibold text-black'>
+                            {postsList.length}
+                        </span>
+                        posts
+                    </li>
+                    <li className='flex flex-col text-center'>
+                        <span className='font-semibold text-black'>54</span>
+                        followers
+                    </li>
+                    <li className='flex flex-col text-center'>
+                        <span className='font-semibold text-black'>27</span>
+                        following
+                    </li>
                 </ul>
                 <main className='grid grid-cols-3 max-w-[975px] mx-auto gap-1 sm:gap-4 mt-4'>
                     {postsList.map((post) => {

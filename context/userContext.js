@@ -50,6 +50,46 @@ export const UserProvider = ({ children }) => {
         }
     };
 
+    const changePhoto = async (data) => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            const formData = new FormData();
+            formData.append('file', data);
+            formData.append('upload_preset', 'instagram-clone');
+            formData.append('cloud_name', 'ianbrdeguzman');
+
+            const { data: cloudinaryData } = await axios.post(
+                'https://api.cloudinary.com/v1_1/ianbrdeguzman/image/upload',
+                formData
+            );
+
+            const response = await axios.post(
+                '/api/change-photo',
+                {
+                    image: cloudinaryData.url,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                }
+            );
+            setData(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError(
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message
+            );
+            setLoading(false);
+        }
+    };
+
     return (
         <UserContext.Provider
             value={{
@@ -59,6 +99,7 @@ export const UserProvider = ({ children }) => {
                 data,
                 register,
                 editProfile,
+                changePhoto,
             }}
         >
             {children}

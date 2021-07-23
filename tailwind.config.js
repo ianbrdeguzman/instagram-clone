@@ -19,6 +19,9 @@ module.exports = {
             backgroundImage: (theme) => ({
                 hero: "url('/images/login-background.png')",
             }),
+            colors: {
+                modal: 'rgba(0,0,0,0.5)',
+            },
         },
     },
     variants: {

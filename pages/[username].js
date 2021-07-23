@@ -7,11 +7,17 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { FiSettings } from 'react-icons/fi';
 import useAuth from '../hooks/useAuth';
+import { useState } from 'react';
+import useUser from '../hooks/useUser';
+import ChangePhoto from '../components/modal/ChangePhoto';
 
 const Profile = ({ data, posts }) => {
     const user = JSON.parse(data);
     const postsList = JSON.parse(posts);
     const { user: loginUser } = useAuth();
+    const { loading } = useUser();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <Layout>
@@ -25,15 +31,26 @@ const Profile = ({ data, posts }) => {
                     <div className='p-4 flex items-center sm:py-8'>
                         {user && (
                             <div className='sm:min-w-[300px] flex justify-center'>
-                                <div className='min-w-[77px] min-h-[77px] sm:min-w-[150px] sm:min-h-[150px] border rounded-full overflow-hidden'>
-                                    <Image
-                                        src={user.image}
-                                        alt={user.username}
-                                        width={150}
-                                        height={150}
-                                        layout='responsive'
-                                    />
-                                </div>
+                                {loading ? (
+                                    <div className='min-w-[77px] min-h-[77px] sm:min-w-[150px] sm:min-h-[150px] border rounded-full overflow-hidden flex justify-center items-center'>
+                                        <p>Loading...</p>
+                                    </div>
+                                ) : (
+                                    <div
+                                        onClick={() =>
+                                            setIsModalOpen(!isModalOpen)
+                                        }
+                                        className='min-w-[77px] min-h-[77px] sm:min-w-[150px] sm:min-h-[150px] border rounded-full overflow-hidden cursor-pointer'
+                                    >
+                                        <Image
+                                            src={user.image}
+                                            alt={user.username}
+                                            width={150}
+                                            height={150}
+                                            layout='responsive'
+                                        />
+                                    </div>
+                                )}
                             </div>
                         )}
                         <section className='w-full pl-4 relative'>
@@ -42,27 +59,28 @@ const Profile = ({ data, posts }) => {
                                     {user.username}
                                 </h2>
                                 {user.username === loginUser?.username ? (
-                                    <>
-                                        <Link href='/accounts/edit'>
-                                            <a className='hidden sm:block border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold mr-4'>
-                                                Edit Profile
-                                            </a>
-                                        </Link>
-                                        <button className='text-xl'>
-                                            <FiSettings />
-                                        </button>
-                                    </>
+                                    <Link href='/accounts/edit'>
+                                        <a className='hidden sm:block border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold mr-4'>
+                                            Edit Profile
+                                        </a>
+                                    </Link>
                                 ) : (
                                     <button className='hidden sm:block border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold mr-4'>
                                         Follow
                                     </button>
                                 )}
                             </div>
-                            <button className='border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold sm:hidden'>
-                                {user.username === loginUser?.username
-                                    ? 'Edit Profile'
-                                    : 'Follow'}
-                            </button>
+                            {user.username === loginUser?.username ? (
+                                <Link href='/accounts/edit'>
+                                    <a className='block text-center border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold sm:hidden'>
+                                        Edit Profile
+                                    </a>
+                                </Link>
+                            ) : (
+                                <button className='block text-center border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold sm:hidden'>
+                                    Follow
+                                </button>
+                            )}
                             <ul className='hidden sm:flex'>
                                 <li className='mr-10'>
                                     <span className='font-semibold'>
@@ -80,13 +98,13 @@ const Profile = ({ data, posts }) => {
                                 </li>
                             </ul>
                             <p className='py-2 font-semibold hidden sm:block'>
-                                {user.name} or bio
+                                {user.bio || user.name}
                             </p>
                         </section>
                     </div>
                 </header>
                 <div className='sm:hidden px-4 pb-4 font-semibold'>
-                    <p>{user.name} or bio</p>
+                    <p>{user.bio || user.name}</p>
                 </div>
                 <ul className='sm:hidden p-4 grid grid-cols-3 text-sm text-gray-500 border-b border-t'>
                     <li className='flex flex-col text-center'>
@@ -120,6 +138,12 @@ const Profile = ({ data, posts }) => {
                         );
                     })}
                 </main>
+                {isModalOpen && (
+                    <ChangePhoto
+                        isModalOpen={isModalOpen}
+                        setIsModalOpen={setIsModalOpen}
+                    />
+                )}
             </div>
         </Layout>
     );
@@ -153,21 +177,16 @@ export const getStaticProps = async (context) => {
     try {
         await dbConnect();
 
-        const user = await User.findOne({ username });
+        let user = await User.findOne({ username });
 
         const posts = await Post.find({ user: user._id }).sort({
             createdAt: 'desc',
         });
 
-        const userProfile = {
-            email: user.email,
-            name: user.name,
-            username: user.username,
-            image: user.image,
-        };
+        user.password = undefined;
         return {
             props: {
-                data: JSON.stringify(userProfile),
+                data: JSON.stringify(user),
                 posts: JSON.stringify(posts),
             },
         };

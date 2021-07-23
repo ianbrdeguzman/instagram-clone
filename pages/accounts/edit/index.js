@@ -59,9 +59,11 @@ const EditProfile = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <h2 className='text-2xl ml-4'>
-                                            {user.username}
-                                        </h2>
+                                        <Link href={`/${user.username}`}>
+                                            <a className='text-2xl ml-4'>
+                                                {user.username}
+                                            </a>
+                                        </Link>
                                     </div>
                                 </div>
                             )}

@@ -1,12 +1,17 @@
-import { createContext, useState } from 'react';
+import { createContext, useReducer } from 'react';
+import passwordReducer from './passwordReducer';
 import axios from 'axios';
 
 export const PasswordContext = createContext();
 
+const initialState = {
+    loading: false,
+    success: null,
+    error: null,
+};
+
 export const PasswordProvider = ({ children }) => {
-    const [loading, setLoading] = useState(false);
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
+    const [state, dispatch] = useReducer(passwordReducer, initialState);
 
     const resetPassword = async (token, password) => {
         try {
@@ -57,35 +62,36 @@ export const PasswordProvider = ({ children }) => {
 
     const changePassword = async (data) => {
         try {
-            setError(null);
-            setData(null);
-            setLoading(true);
+            dispatch({ type: 'PASSWORD_CHANGE_REQUEST' });
+
             const response = await axios.post('/api/change-password', data, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
 
-            setData(response.data);
-            setLoading(false);
+            dispatch({
+                type: 'PASSWORD_CHANGE_SUCCESS',
+                payload: response.data,
+            });
         } catch (error) {
-            setError(
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-            );
-            setLoading(false);
+            dispatch({
+                type: 'PASSWORD_CHANGE_FAIL',
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
         }
     };
+
     return (
         <PasswordContext.Provider
             value={{
-                loading,
-                data,
-                error,
+                ...state,
+                changePassword,
                 resetPassword,
                 forgotPassword,
-                changePassword,
             }}
         >
             {children}

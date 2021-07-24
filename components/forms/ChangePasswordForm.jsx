@@ -12,7 +12,8 @@ const ChangePasswordForm = () => {
     } = useForm();
 
     const { user } = useUser();
-    const { changePassword, loading, data, error } = usePassword();
+
+    const { changePassword, loading, success, error } = usePassword();
 
     const handleOnSubmit = async (data) => {
         const obj = {
@@ -31,7 +32,7 @@ const ChangePasswordForm = () => {
                     {error}
                 </p>
             )}
-            {data && (
+            {success && (
                 <p className='sm:ml-[216px] text-sm text-green-500 mb-4 py-1 flex justify-center rounded bg-green-100'>
                     You have successfully changed your password.
                 </p>

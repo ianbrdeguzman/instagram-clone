@@ -155,7 +155,7 @@ export const UserProvider = ({ children }) => {
         try {
             dispatch({ type: 'USER_REGISTER_REQUEST' });
 
-            const response = await axios.post('/api/register', data);
+            const response = await axios.post('/api/users/register', data);
 
             dispatch({ type: 'USER_REGISTER_SUCCESS', payload: response.data });
         } catch (error) {

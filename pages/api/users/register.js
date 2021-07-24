@@ -9,13 +9,13 @@ export default async function handler(req, res) {
 
             const { email, name, username, password } = req.body;
 
-            const userEmail = await User.findOne({ email });
+            const sameEmail = await User.findOne({ email });
 
-            if (userEmail) throw new Error('Email address is already taken.');
+            if (sameEmail) throw new Error('Email address is already taken.');
 
-            const userHandle = await User.findOne({ username });
+            const sameUsername = await User.findOne({ username });
 
-            if (userHandle) throw new Error('Username is already taken.');
+            if (sameUsername) throw new Error('Username is already taken.');
 
             const newUser = new User({
                 email,
@@ -24,9 +24,7 @@ export default async function handler(req, res) {
                 password: await bcrypt.hash(password, 6),
             });
 
-            const createdUser = await newUser.save();
-
-            if (!createdUser) throw new Error('Oops. Something went wrong.');
+            await newUser.save();
 
             res.status(200).send({
                 message: 'Registration successful.',

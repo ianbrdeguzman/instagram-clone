@@ -4,6 +4,8 @@ const passwordReducer = (state, action) => {
             return {
                 ...state,
                 loading: true,
+                success: null,
+                error: null,
             };
         case 'PASSWORD_CHANGE_SUCCESS':
             return {

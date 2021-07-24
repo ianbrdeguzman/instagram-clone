@@ -8,7 +8,7 @@ const handler = async (req, res) => {
         try {
             await dbConnect();
 
-            const user = await User.findOne({ email: req.body.email });
+            const user = await User.findOne({ email: req.user.email });
 
             if (!user) throw new Error('User not found.');
 
@@ -18,7 +18,7 @@ const handler = async (req, res) => {
             const newPassword = await bcrypt.hash(req.body.newPassword, 6);
 
             let updatedUser = await User.findOneAndUpdate(
-                { email: req.body.email },
+                { email: req.user.email },
                 { password: newPassword },
                 { new: true }
             );

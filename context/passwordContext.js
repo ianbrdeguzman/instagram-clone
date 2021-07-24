@@ -64,7 +64,7 @@ export const PasswordProvider = ({ children }) => {
         try {
             dispatch({ type: 'PASSWORD_CHANGE_REQUEST' });
 
-            const response = await axios.post('/api/change-password', data, {
+            const response = await axios.post('/api/password/change', data, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },

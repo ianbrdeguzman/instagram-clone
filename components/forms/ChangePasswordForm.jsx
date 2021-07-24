@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import usePassword from '../../hooks/usePassword';
-import useUser from '../../hooks/useUser';
 
 const ChangePasswordForm = () => {
     const {
@@ -11,18 +10,10 @@ const ChangePasswordForm = () => {
         reset,
     } = useForm();
 
-    const { user } = useUser();
-
     const { changePassword, loading, success, error } = usePassword();
 
     const handleOnSubmit = async (data) => {
-        const obj = {
-            email: user.email,
-            oldPassword: data.oldPassword,
-            newPassword: data.newPassword,
-        };
-
-        await changePassword(obj);
+        await changePassword(data);
         reset();
     };
     return (

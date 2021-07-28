@@ -122,8 +122,7 @@ export const UserProvider = ({ children }) => {
 
     const changePhoto = async (data) => {
         try {
-            setLoading(true);
-            setError(null);
+            dispatch({ type: 'USER_EDIT_AVATAR_REQUEST' });
 
             const formData = new FormData();
             formData.append('file', data);
@@ -148,15 +147,19 @@ export const UserProvider = ({ children }) => {
                     },
                 }
             );
-            setData(response.data);
-            setLoading(false);
+
+            dispatch({
+                type: 'USER_EDIT_AVATAR_SUCCESS',
+                payload: response.data,
+            });
         } catch (error) {
-            setError(
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-            );
-            setLoading(false);
+            dispatch({
+                type: 'USER_EDIT_AVATAR_FAIL',
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
         }
     };
 

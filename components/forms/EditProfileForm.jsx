@@ -7,9 +7,9 @@ const EditProfileForm = () => {
     const { editProfile, loading, success, error, user } = useUser();
 
     const handleOnSubmit = async (data) => {
-        console.log(data);
         await editProfile(data);
     };
+
     return (
         <form onSubmit={handleSubmit(handleOnSubmit)}>
             {error && (

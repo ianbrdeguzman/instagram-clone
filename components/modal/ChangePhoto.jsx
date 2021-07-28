@@ -2,11 +2,11 @@ import React from 'react';
 import useUser from '../../hooks/useUser';
 
 const ChangePhoto = ({ isModalOpen, setIsModalOpen }) => {
-    const { changePhoto, data: newPhoto } = useUser();
+    const { changePhoto } = useUser();
 
     const handleOnChange = async (e) => {
         await changePhoto(e.target.files[0]);
-        console.log(newPhoto);
+        setIsModalOpen(!isModalOpen);
     };
 
     return (
@@ -29,12 +29,18 @@ const ChangePhoto = ({ isModalOpen, setIsModalOpen }) => {
                         Upload Photo
                     </label>
                 </div>
-                <div
+                <button
+                    className='block p-4 cursor-pointer text-red-500 border-b w-full font-semibold'
+                    onClick={() => console.log('remove')}
+                >
+                    Remove Photo
+                </button>
+                <button
                     onClick={() => setIsModalOpen(!isModalOpen)}
                     className='p-4 cursor-pointer'
                 >
-                    <p>Cancel</p>
-                </div>
+                    Cancel
+                </button>
             </div>
         </div>
     );

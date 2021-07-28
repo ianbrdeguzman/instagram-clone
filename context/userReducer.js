@@ -85,6 +85,24 @@ const userReducer = (state, action) => {
                 error: action.payload,
                 loading: false,
             };
+        case 'USER_EDIT_PROFILE_REQUEST':
+            return {
+                ...state,
+                loading: true,
+                success: false,
+            };
+        case 'USER_EDIT_PROFILE_SUCCESS':
+            return {
+                ...state,
+                user: action.payload,
+                success: true,
+                loading: false,
+            };
+        case 'USER_EDIT_PROFILE_FAIL':
+            return {
+                ...state,
+                error: action.payload,
+            };
         default:
             return { ...state };
     }

@@ -97,25 +97,26 @@ export const UserProvider = ({ children }) => {
 
     const editProfile = async (data) => {
         try {
-            setError(null);
-            setData(null);
-            setLoading(true);
+            dispatch({ type: 'USER_EDIT_PROFILE_REQUEST' });
 
-            const response = await axios.post('/api/edit-profile', data, {
+            const response = await axios.post('/api/users/edit/profile', data, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },
             });
 
-            setData(response.data);
-            setLoading(false);
+            dispatch({
+                type: 'USER_EDIT_PROFILE_SUCCESS',
+                payload: response.data,
+            });
         } catch (error) {
-            setError(
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-            );
-            setLoading(false);
+            dispatch({
+                type: 'USER_EDIT_PROFILE_FAIL',
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
         }
     };
 

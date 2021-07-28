@@ -2,14 +2,13 @@ import { useForm } from 'react-hook-form';
 import useUser from '../../hooks/useUser';
 
 const EditProfileForm = () => {
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit } = useForm();
 
-    const { editProfile, loading, data: updated, error, user } = useUser();
+    const { editProfile, loading, success, error, user } = useUser();
 
     const handleOnSubmit = async (data) => {
         console.log(data);
         await editProfile(data);
-        reset();
     };
     return (
         <form onSubmit={handleSubmit(handleOnSubmit)}>
@@ -18,7 +17,7 @@ const EditProfileForm = () => {
                     {error}
                 </p>
             )}
-            {updated && (
+            {success && (
                 <p className='sm:ml-[216px] text-sm text-green-500 mb-4 py-1 flex justify-center rounded bg-green-100'>
                     You have successfully updated your profile.
                 </p>
@@ -37,7 +36,7 @@ const EditProfileForm = () => {
                         maxLength: 20,
                     })}
                     id='name'
-                    defaultValue={updated?.name || user?.name}
+                    defaultValue={user?.name}
                     className='border outline-none py-1 px-4 sm:ml-4 rounded-md block w-full'
                 />
             </div>
@@ -55,7 +54,7 @@ const EditProfileForm = () => {
                         maxLength: 20,
                     })}
                     id='username'
-                    defaultValue={updated?.username || user?.username}
+                    defaultValue={user?.username}
                     className='border outline-none py-1 px-4 sm:ml-4 rounded-md block w-full'
                 />
             </div>
@@ -73,7 +72,7 @@ const EditProfileForm = () => {
                         maxLength: 50,
                     })}
                     id='website'
-                    defaultValue={updated?.website || user?.website || ''}
+                    defaultValue={user?.website}
                     className='border outline-none py-1 px-4 sm:ml-4 rounded-md block w-full'
                 />
             </div>
@@ -90,7 +89,7 @@ const EditProfileForm = () => {
                     })}
                     id='bio'
                     rows='4'
-                    defaultValue={updated?.bio || user?.bio || ''}
+                    defaultValue={user?.bio}
                     className='border outline-none py-1 px-4 sm:ml-4 rounded-md block w-full'
                 />
             </div>
@@ -107,7 +106,7 @@ const EditProfileForm = () => {
                         pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     })}
                     id='email'
-                    defaultValue={updated?.email || user?.email || ''}
+                    defaultValue={user?.email}
                     className='border outline-none py-1 px-4 sm:ml-4 rounded-md block w-full'
                 />
             </div>
@@ -124,7 +123,7 @@ const EditProfileForm = () => {
                         maxLength: 10,
                     })}
                     id='phone'
-                    defaultValue={updated?.phone || user?.phone || ''}
+                    defaultValue={user?.phone}
                     className='border outline-none py-1 px-4 sm:ml-4 rounded-md block w-full'
                 />
             </div>
@@ -141,7 +140,7 @@ const EditProfileForm = () => {
                         maxLength: 20,
                     })}
                     id='gender'
-                    defaultValue={updated?.gender || user?.gender || ''}
+                    defaultValue={user?.gender}
                     className='border outline-none py-1 px-4 sm:ml-4 rounded-md block w-full'
                 />
             </div>

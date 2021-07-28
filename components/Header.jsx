@@ -112,7 +112,9 @@ const Header = () => {
                                     Saved
                                 </li>
                                 <li className='py-2 px-4 cursor-pointer hover:bg-gray-100'>
-                                    <Link href='/accounts/edit'>
+                                    <Link
+                                        href={`/accounts/edit/${user?.username}`}
+                                    >
                                         <a className='flex items-center'>
                                             <span className='mr-2 text-base'>
                                                 <FiSettings />

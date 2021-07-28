@@ -1,7 +1,7 @@
-import dbConnect from '../../../utils/dbConnect';
-import User from '../../../models/userModel';
+import dbConnect from '../../../../utils/dbConnect';
+import User from '../../../../models/userModel';
+import withToken from '../../../../middlewares/withToken';
 import bcrypt from 'bcryptjs';
-import withToken from '../../../middlewares/withToken';
 
 const handler = async (req, res) => {
     if (req.method === 'POST') {

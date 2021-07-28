@@ -102,6 +102,27 @@ const userReducer = (state, action) => {
             return {
                 ...state,
                 error: action.payload,
+                success: false,
+            };
+        case 'USER_EDIT_AVATAR_REQUEST':
+            return {
+                ...state,
+                loading: true,
+                success: false,
+            };
+        case 'USER_EDIT_AVATAR_SUCCESS':
+            return {
+                ...state,
+                user: action.profile,
+                success: true,
+                loading: false,
+            };
+        case 'USER_EDIT_AVATAR_FAIL':
+            return {
+                ...state,
+                error: action.payload,
+                success: false,
+                loading: false,
             };
         default:
             return { ...state };

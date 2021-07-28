@@ -1,7 +1,7 @@
-import User from '../../../models/userModel';
-import dbConnect from '../../../utils/dbConnect';
-import { generatePasswordResetToken } from '../../../utils/generateToken';
-import { sendForgotPasswordMail } from '../../../utils/mailer';
+import User from '../../../../models/userModel';
+import dbConnect from '../../../../utils/dbConnect';
+import { generatePasswordResetToken } from '../../../../utils/generateToken';
+import { sendForgotPasswordMail } from '../../../../utils/mailer';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {

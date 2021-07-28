@@ -8,6 +8,7 @@ const initialState = {
     loading: false,
     success: null,
     error: null,
+    data: null,
 };
 
 export const PasswordProvider = ({ children }) => {
@@ -15,48 +16,52 @@ export const PasswordProvider = ({ children }) => {
 
     const resetPassword = async (token, password) => {
         try {
-            setError(null);
-            setLoading(true);
-            const response = await axios.post('/api/reset-password', {
+            dispatch({ type: 'PASSWORD_RESET_REQUEST' });
+
+            const response = await axios.post('/api/users/password/reset', {
                 token,
                 password,
             });
-            setData(response);
-            setLoading(false);
+
+            dispatch({ type: 'PASSWORD_RESET_SUCCESS', payload: response });
         } catch (error) {
-            setLoading(false);
-            setError(
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-            );
+            dispatch({
+                type: 'PASSWORD_RESET_FAIL',
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
         }
     };
 
     const forgotPassword = async (email) => {
         try {
-            setError(null);
-            setLoading(true);
-            const response = await axios.post('/api/forgot-password', {
+            dispatch({ type: 'PASSWORD_FORGOT_REQUEST' });
+
+            const response = await axios.post('/api/users/password/forgot', {
                 email,
             });
+
             if (response?.data.accepted.length > 0) {
-                setData(
-                    'Password reset link has been sent. Please check your email.'
-                );
-                setLoading(false);
+                dispatch({
+                    type: 'PASSWORD_FORGOT_SUCCESS',
+                    payload:
+                        'Password reset link has been sent. Please check your email.',
+                });
             } else {
                 throw new Error({
                     message: 'Oops! Something went wrong.',
                 });
             }
         } catch (error) {
-            setError(
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message
-            );
-            setLoading(false);
+            dispatch({
+                type: 'PASSWORD_FORGOT_FAIL',
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
         }
     };
 

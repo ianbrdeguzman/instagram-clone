@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createContext, useState, useReducer } from 'react';
+import { createContext, useReducer } from 'react';
 
 export const PostContext = createContext();
 
@@ -8,6 +8,7 @@ const initialState = {
     postLoading: false,
     posts: [],
     error: null,
+    success: false,
 };
 
 const reducer = (state, action) => {
@@ -45,6 +46,11 @@ const reducer = (state, action) => {
                 ...state,
                 error: action.payload,
                 postLoading: false,
+            };
+        case 'POST_LIKE':
+            return {
+                ...state,
+                success: true,
             };
         default:
             return { ...state };
@@ -104,12 +110,33 @@ export const PostProvider = ({ children }) => {
         }
     };
 
+    const likePost = async (postId) => {
+        try {
+            await axios.put(
+                '/api/post/like',
+                { postId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                }
+            );
+
+            dispatch({ type: 'POST_LIKE' });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <PostContext.Provider
             value={{
                 ...state,
                 getAllPosts,
                 createPost,
+                likePost,
             }}
         >
             {children}

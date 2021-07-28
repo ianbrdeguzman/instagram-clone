@@ -1,28 +1,43 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { BsThreeDots } from 'react-icons/bs';
 import { FiSend } from 'react-icons/fi';
-import { IoMdHeartEmpty } from 'react-icons/io';
+import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 import { MdBookmarkBorder } from 'react-icons/md';
 import { AiOutlineMessage, AiOutlineSmile } from 'react-icons/ai';
 import useUser from '../hooks/useUser';
+import usePost from '../hooks/usePost';
 
 const Post = ({ post }) => {
     const {
         _id,
         caption,
         image,
+        likes,
         user: { _id: userId, username },
     } = post;
 
     const { user } = useUser();
+    const { likePost } = usePost();
 
     const { register, handleSubmit, watch } = useForm();
+
+    const [like, setLike] = useState(false);
 
     const handleOnSubmit = (data) => {
         console.log(`comment = ${data.comment}`);
         console.log(`post id = ${_id}`);
         console.log(`user commenting = ${user.username}`);
+    };
+
+    const handlePostLike = (postId) => {
+        setLike(!like);
+        likePost(postId);
+    };
+
+    const handlePostUnlike = (postId) => {
+        console.log('unlike');
     };
 
     return (
@@ -49,11 +64,23 @@ const Post = ({ post }) => {
             </main>
             <footer className='p-4'>
                 <div className='flex text-2xl'>
-                    <ul className='flex flex-1 pb-4'>
+                    <ul className='flex flex-1'>
                         <li className='mr-4'>
-                            <button className='hover:opacity-50 transition'>
-                                <IoMdHeartEmpty />
-                            </button>
+                            {likes?.includes(user._id) ? (
+                                <button
+                                    onClick={() => handlePostUnlike(_id)}
+                                    className='hover:opacity-50 transition'
+                                >
+                                    <IoMdHeart />
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={() => handlePostLike(_id)}
+                                    className='hover:opacity-50 transition'
+                                >
+                                    {like ? <IoMdHeart /> : <IoMdHeartEmpty />}
+                                </button>
+                            )}
                         </li>
                         <li className='mr-4'>
                             <button className='hover:opacity-50 transition'>
@@ -79,7 +106,7 @@ const Post = ({ post }) => {
                 className='border-t p-4 flex sm:hidden'
                 onSubmit={handleSubmit(handleOnSubmit)}
             >
-                <button className='text-2xl'>
+                <button type='button' className='text-2xl'>
                     <AiOutlineSmile />
                 </button>
                 <input

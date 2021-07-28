@@ -47,6 +47,11 @@ const reducer = (state, action) => {
                 error: action.payload,
                 postLoading: false,
             };
+        case 'POST_ADD_COMMENT':
+            return {
+                ...state,
+                posts: action.payload,
+            };
         default:
             return { ...state };
     }
@@ -141,6 +146,53 @@ export const PostProvider = ({ children }) => {
         }
     };
 
+    const commentPost = async (data) => {
+        try {
+            const {
+                postId,
+                text,
+                user: { _id, username },
+            } = data;
+
+            const newPosts = state.posts.map((post) => {
+                return post._id === postId
+                    ? {
+                          ...post,
+                          comments: [
+                              ...post.comments,
+                              {
+                                  text,
+                                  user: {
+                                      _id,
+                                      username,
+                                  },
+                              },
+                          ],
+                      }
+                    : post;
+            });
+
+            await axios.put(
+                '/api/post/comment',
+                {
+                    postId,
+                    text,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                }
+            );
+
+            dispatch({ type: 'POST_ADD_COMMENT', payload: newPosts });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <PostContext.Provider
             value={{
@@ -149,6 +201,7 @@ export const PostProvider = ({ children }) => {
                 createPost,
                 likePost,
                 unlikePost,
+                commentPost,
             }}
         >
             {children}

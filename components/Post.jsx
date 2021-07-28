@@ -6,8 +6,8 @@ import { FiSend } from 'react-icons/fi';
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io';
 import { MdBookmarkBorder } from 'react-icons/md';
 import { AiOutlineMessage, AiOutlineSmile } from 'react-icons/ai';
-import useUser from '../hooks/useUser';
 import usePost from '../hooks/usePost';
+import useUser from '../hooks/useUser';
 
 const Post = ({ post }) => {
     const {
@@ -15,20 +15,27 @@ const Post = ({ post }) => {
         caption,
         image,
         likes,
+        comments,
         user: { _id: userId, username },
     } = post;
 
     const { user } = useUser();
-    const { likePost, unlikePost } = usePost();
+    const { likePost, unlikePost, commentPost } = usePost();
 
     const { register, handleSubmit, watch } = useForm();
 
     const [like, setLike] = useState(likes.includes(userId));
 
     const handleOnSubmit = (data) => {
-        console.log(`comment = ${data.comment}`);
-        console.log(`post id = ${_id}`);
-        console.log(`user commenting = ${user.username}`);
+        const obj = {
+            postId: _id,
+            text: data.comment,
+            user: {
+                _id: user._id,
+                username: user.username,
+            },
+        };
+        commentPost(obj);
     };
 
     const handlePostLike = (postId) => {
@@ -63,7 +70,7 @@ const Post = ({ post }) => {
                     priority='true'
                 ></Image>
             </main>
-            <footer className='p-4'>
+            <footer className='p-4 pb-0'>
                 <div className='flex text-2xl'>
                     <ul className='flex flex-1'>
                         <li className='mr-4'>
@@ -99,12 +106,24 @@ const Post = ({ post }) => {
                     </button>
                 </div>
                 <div className='flex'>
-                    <h3 className='mr-4 font-semibold'>{username}</h3>
-                    <p>{caption}</p>
+                    <span className='mr-2 font-semibold'>{username}</span>
+                    <span>{caption}</span>
                 </div>
             </footer>
+            <ul>
+                {comments?.map(({ text, user: { _id, username } }) => {
+                    return (
+                        <li key={_id} className='px-4'>
+                            <span className='mr-2 font-semibold'>
+                                {username}
+                            </span>
+                            <span>{text}</span>
+                        </li>
+                    );
+                })}
+            </ul>
             <form
-                className='border-t p-4 flex sm:hidden'
+                className='border-t p-4 mt-4 flex sm:hidden'
                 onSubmit={handleSubmit(handleOnSubmit)}
             >
                 <button type='button' className='text-2xl'>

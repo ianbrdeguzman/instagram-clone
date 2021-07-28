@@ -1,6 +1,6 @@
-import withToken from '../../../middlewares/withToken';
-import User from '../../../models/userModel';
-import dbConnect from '../../../utils/dbConnect';
+import withToken from '../../../../middlewares/withToken';
+import User from '../../../../models/userModel';
+import dbConnect from '../../../../utils/dbConnect';
 
 const handler = async (req, res) => {
     if (req.method === 'POST') {

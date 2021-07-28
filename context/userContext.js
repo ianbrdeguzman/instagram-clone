@@ -10,6 +10,7 @@ const initialState = {
     error: null,
     loadError: null,
     success: false,
+    successAvatar: false,
 };
 
 export const UserProvider = ({ children }) => {
@@ -135,7 +136,7 @@ export const UserProvider = ({ children }) => {
             );
 
             const response = await axios.post(
-                '/api/change-photo',
+                '/api/users/edit/avatar',
                 {
                     image: cloudinaryData.url,
                 },

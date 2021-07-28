@@ -9,6 +9,11 @@ const ChangePhoto = ({ isModalOpen, setIsModalOpen }) => {
         setIsModalOpen(!isModalOpen);
     };
 
+    const handleRemovePhoto = async () => {
+        console.log('remove');
+        setIsModalOpen(!isModalOpen);
+    };
+
     return (
         <div className='h-screen w-screen bg-modal fixed top-0 left-0 z-20 flex justify-center items-center'>
             <div className='bg-white rounded-xl min-w-[260px] sm:min-w-[400px] text-center'>
@@ -18,7 +23,7 @@ const ChangePhoto = ({ isModalOpen, setIsModalOpen }) => {
                     </h2>
                 </header>
                 <div className='p-4 border-t border-b'>
-                    <label className='text-blue-500 font-semibold cursor-pointer'>
+                    <label className='text-blue-500 font-semibold cursor-pointer w-full block h-full'>
                         <input
                             type='file'
                             name='photo'
@@ -31,13 +36,13 @@ const ChangePhoto = ({ isModalOpen, setIsModalOpen }) => {
                 </div>
                 <button
                     className='block p-4 cursor-pointer text-red-500 border-b w-full font-semibold'
-                    onClick={() => console.log('remove')}
+                    onClick={handleRemovePhoto}
                 >
                     Remove Photo
                 </button>
                 <button
                     onClick={() => setIsModalOpen(!isModalOpen)}
-                    className='p-4 cursor-pointer'
+                    className='block p-4 cursor-pointer w-full'
                 >
                     Cancel
                 </button>

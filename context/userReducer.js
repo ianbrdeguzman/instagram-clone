@@ -124,6 +124,26 @@ const userReducer = (state, action) => {
                 successAvatar: false,
                 loading: false,
             };
+        case 'USER_REMOVE_AVATAR_REQUEST':
+            return {
+                ...state,
+                loading: true,
+                successAvatar: false,
+            };
+        case 'USER_REMOVE_AVATAR_SUCCESS':
+            return {
+                ...state,
+                user: action.payload,
+                successAvatar: true,
+                loading: false,
+            };
+        case 'USER_REMOVE_AVATAR_FAIL':
+            return {
+                ...state,
+                error: action.payload,
+                successAvatar: false,
+                loading: false,
+            };
         default:
             return { ...state };
     }

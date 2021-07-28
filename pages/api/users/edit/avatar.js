@@ -21,9 +21,31 @@ const handler = async (req, res) => {
                 message: error.message,
             });
         }
+    } else if (req.method === 'GET') {
+        try {
+            await dbConnect();
+
+            let user = await User.findOneAndUpdate(
+                { email: req.user.email },
+                {
+                    image: 'https://res.cloudinary.com/ianbrdeguzman/image/upload/v1626895563/default-avatar_mqgoug.png',
+                },
+                {
+                    new: true,
+                }
+            );
+
+            user.password = undefined;
+
+            res.status(200).send(user);
+        } catch (error) {
+            res.status(404).send({
+                message: error.message,
+            });
+        }
     } else {
         res.status(400).send({
-            message: 'This is not a POST request.',
+            message: 'This is not a POST or GET request.',
         });
     }
 };

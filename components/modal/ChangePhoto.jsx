@@ -2,7 +2,7 @@ import React from 'react';
 import useUser from '../../hooks/useUser';
 
 const ChangePhoto = ({ isModalOpen, setIsModalOpen }) => {
-    const { changePhoto } = useUser();
+    const { changePhoto, removePhoto } = useUser();
 
     const handleOnChange = async (e) => {
         await changePhoto(e.target.files[0]);
@@ -10,7 +10,7 @@ const ChangePhoto = ({ isModalOpen, setIsModalOpen }) => {
     };
 
     const handleRemovePhoto = async () => {
-        console.log('remove');
+        await removePhoto();
         setIsModalOpen(!isModalOpen);
     };
 

@@ -164,6 +164,28 @@ export const UserProvider = ({ children }) => {
         }
     };
 
+    const removePhoto = async () => {
+        try {
+            dispatch({ type: 'USER_REMOVE_AVATAR_REQUEST' });
+
+            const { data } = await axios.get('/api/users/edit/avatar', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            dispatch({ type: 'USER_REMOVE_AVATAR_SUCCESS', payload: data });
+        } catch (error) {
+            dispatch({
+                type: 'USER_REMOVE_AVATAR_FAIL',
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            });
+        }
+    };
+
     return (
         <UserContext.Provider
             value={{
@@ -173,6 +195,7 @@ export const UserProvider = ({ children }) => {
                 register,
                 editProfile,
                 changePhoto,
+                removePhoto,
             }}
         >
             {children}

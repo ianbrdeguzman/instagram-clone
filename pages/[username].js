@@ -41,8 +41,11 @@ const Profile = ({ data, posts }) => {
                                         className='min-w-[77px] min-h-[77px] sm:min-w-[150px] sm:min-h-[150px] border rounded-full overflow-hidden cursor-pointer'
                                     >
                                         <Image
-                                            src={user.image}
-                                            alt={user.username}
+                                            src={loginUser?.image || user.image}
+                                            alt={
+                                                loginUser?.image ||
+                                                user.username
+                                            }
                                             width={150}
                                             height={150}
                                             layout='responsive'

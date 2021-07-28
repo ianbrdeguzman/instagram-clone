@@ -47,11 +47,6 @@ const reducer = (state, action) => {
                 error: action.payload,
                 postLoading: false,
             };
-        case 'POST_LIKE':
-            return {
-                ...state,
-                success: true,
-            };
         default:
             return { ...state };
     }
@@ -123,8 +118,24 @@ export const PostProvider = ({ children }) => {
                     },
                 }
             );
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-            dispatch({ type: 'POST_LIKE' });
+    const unlikePost = async (postId) => {
+        try {
+            await axios.put(
+                '/api/post/unlike',
+                { postId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                }
+            );
         } catch (error) {
             console.log(error);
         }
@@ -137,6 +148,7 @@ export const PostProvider = ({ children }) => {
                 getAllPosts,
                 createPost,
                 likePost,
+                unlikePost,
             }}
         >
             {children}

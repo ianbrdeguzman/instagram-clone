@@ -19,11 +19,11 @@ const Post = ({ post }) => {
     } = post;
 
     const { user } = useUser();
-    const { likePost } = usePost();
+    const { likePost, unlikePost } = usePost();
 
     const { register, handleSubmit, watch } = useForm();
 
-    const [like, setLike] = useState(false);
+    const [like, setLike] = useState(likes.includes(userId));
 
     const handleOnSubmit = (data) => {
         console.log(`comment = ${data.comment}`);
@@ -37,7 +37,8 @@ const Post = ({ post }) => {
     };
 
     const handlePostUnlike = (postId) => {
-        console.log('unlike');
+        setLike(!like);
+        unlikePost(postId);
     };
 
     return (
@@ -66,7 +67,7 @@ const Post = ({ post }) => {
                 <div className='flex text-2xl'>
                     <ul className='flex flex-1'>
                         <li className='mr-4'>
-                            {likes?.includes(user._id) ? (
+                            {like ? (
                                 <button
                                     onClick={() => handlePostUnlike(_id)}
                                     className='hover:opacity-50 transition'
@@ -78,7 +79,7 @@ const Post = ({ post }) => {
                                     onClick={() => handlePostLike(_id)}
                                     className='hover:opacity-50 transition'
                                 >
-                                    {like ? <IoMdHeart /> : <IoMdHeartEmpty />}
+                                    <IoMdHeartEmpty />
                                 </button>
                             )}
                         </li>

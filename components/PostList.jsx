@@ -9,7 +9,7 @@ const PostList = () => {
         getAllPosts();
     }, []);
     return (
-        <div className='min-h-screen flex flex-col justify-center items-center mt-[62px]'>
+        <div className='min-h-sc flex flex-col justify-center items-center mt-[62px]'>
             {loading ? (
                 <h1>Loading...</h1>
             ) : (

@@ -15,6 +15,9 @@ module.exports = {
                 'Oxygen',
             ],
         },
+        minHeight: {
+            sc: 'calc(100vh - 56px)',
+        },
         extend: {
             backgroundImage: (theme) => ({
                 hero: "url('/images/login-background.png')",

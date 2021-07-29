@@ -49,7 +49,7 @@ const Post = ({ post }) => {
     };
 
     return (
-        <article className='bg-white w-screen mb-4 text-sm max-w-[600px] sm:border sm:rounded'>
+        <article className='bg-white w-screen mb-4 text-sm max-w-[600px] sm:border sm:rounded overflow-x-hidden'>
             <header className='flex border-b p-4'>
                 <div className='flex items-center flex-1'>
                     <p className='border w-[42px] h-[42px] rounded-full flex justify-center items-center mr-4 uppercase'>
@@ -61,14 +61,15 @@ const Post = ({ post }) => {
                     <BsThreeDots />
                 </button>
             </header>
-            <main>
+            <main className='w-full max-w-[600px]'>
                 <Image
                     src={image}
                     alt='post'
                     width={600}
                     height={600}
                     priority='true'
-                ></Image>
+                    layout='responsive'
+                />
             </main>
             <footer className='p-4 pb-0'>
                 <div className='flex text-2xl'>
@@ -105,12 +106,12 @@ const Post = ({ post }) => {
                         <MdBookmarkBorder />
                     </button>
                 </div>
-                <div className='flex'>
+                <div className='flex sm:mb-4'>
                     <span className='mr-2 font-semibold'>{username}</span>
                     <span>{caption}</span>
                 </div>
             </footer>
-            <ul>
+            <ul className='sm:hidden'>
                 {comments?.map(({ text, user: { _id, username } }) => {
                     return (
                         <li key={_id} className='px-4'>

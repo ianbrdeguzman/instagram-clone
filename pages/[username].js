@@ -79,7 +79,7 @@ const Profile = ({ data, posts }) => {
                                 )}
                             </div>
                             {user.username === loginUser?.username ? (
-                                <Link href='/accounts/edit'>
+                                <Link href={`/accounts/edit/${user.username}`}>
                                     <a className='block text-center border w-full sm:w-auto px-2 py-1 text-sm rounded font-semibold sm:hidden'>
                                         Edit Profile
                                     </a>

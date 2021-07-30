@@ -17,6 +17,7 @@ module.exports = {
         },
         minHeight: {
             sc: 'calc(100vh - 56px)',
+            screen: '100vh',
         },
         extend: {
             backgroundImage: (theme) => ({

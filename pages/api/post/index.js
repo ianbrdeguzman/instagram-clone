@@ -4,7 +4,7 @@ import withToken from '../../../middlewares/withToken';
 const handler = async (req, res) => {
     if (req.method === 'GET') {
         Post.find()
-            .populate('user', '_id name username')
+            .populate('user', '_id name username image')
             .populate({
                 path: 'comments',
                 populate: { path: 'user', select: '_id username' },

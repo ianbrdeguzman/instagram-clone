@@ -16,12 +16,11 @@ const Post = ({ post }) => {
         image,
         likes,
         comments,
-        user: { _id: userId, username },
+        user: { _id: userId, username, image: userImage },
     } = post;
 
     const { user } = useUser();
     const { likePost, unlikePost, commentPost } = usePost();
-
     const { register, handleSubmit, watch } = useForm();
 
     const [like, setLike] = useState(likes.includes(userId));
@@ -50,11 +49,17 @@ const Post = ({ post }) => {
 
     return (
         <article className='bg-white w-screen mb-4 text-sm max-w-[600px] sm:border sm:rounded overflow-x-hidden'>
-            <header className='flex border-b p-4'>
-                <div className='flex items-center flex-1'>
-                    <p className='border w-[42px] h-[42px] rounded-full flex justify-center items-center mr-4 uppercase'>
-                        {username.substring(0, 2)}
-                    </p>
+            <header className='flex justify-between border-b p-4'>
+                <div className='flex items-center'>
+                    <div className='border w-[42px] h-[42px] rounded-full overflow-hidden mr-4'>
+                        <Image
+                            src={userImage}
+                            alt={username}
+                            width={42}
+                            height={42}
+                            layout='responsive'
+                        />
+                    </div>
                     <p className='font-semibold'>{username}</p>
                 </div>
                 <button className='text-lg'>
